@@ -1,7 +1,7 @@
 FC=ifort #gfortran 
 LIBS=-lzmq #-L$(ZMQ_ROOT)/src/.libs 
 
-EXE=hwserver hwclient wuserver #wuclient
+EXE=hwserver hwclient wuserver wuclient
 
 .PHONY: default
 

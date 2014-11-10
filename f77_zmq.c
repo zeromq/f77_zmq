@@ -44,6 +44,11 @@ int f77_zmq_connect_ (void* *socket, char* address_in, int address_len)
   return zmq_connect (*socket, address);
 }
 
+int f77_zmq_setsockopt_ (void* *socket, int* option_name, void* option_value, int* option_len, int dummy)
+{
+  return zmq_setsockopt (*socket, *option_name, option_value, *option_len);
+}
+
 int f77_zmq_send_ (void* *socket, void* message, int* message_len, int* flags, int dummy)
 {
   return zmq_send (*socket, message, *message_len, *flags);
