@@ -5,9 +5,19 @@ void* f77_zmq_ctx_new_ ()
     return zmq_ctx_new ();
 }
 
+int f77_zmq_ctx_destroy_ (void* *context)
+{
+    return zmq_ctx_destroy (*context);
+}
+
 void* f77_zmq_socket_ (void* *context, int* type)
 {
     return zmq_socket (*context, *type);
+}
+
+int f77_zmq_close_ (void* *socket)
+{
+    return zmq_close(*socket);
 }
 
 int f77_zmq_bind_ (void* *socket, char* address_in, int address_len)
@@ -43,4 +53,5 @@ int f77_zmq_recv_ (void* *socket, void* message, int* message_len, int* flags, i
 {
   return zmq_recv (*socket, message, *message_len, *flags);
 }
+
 

@@ -16,6 +16,6 @@ zmq.h: $(ZMQ_H)
 f77_zmq.o: f77_zmq.c
 	$(CC) -c $^ -o $@
 
-f77_zmq.h: create_f77_zmq_h.py zmq.h
+f77_zmq.h: create_f77_zmq_h.py zmq.h f77_zmq.c
 	python create_f77_zmq_h.py zmq.h
 

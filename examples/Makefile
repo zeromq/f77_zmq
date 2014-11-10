@@ -1,9 +1,11 @@
-FC=gfortran 
+FC=ifort #gfortran 
 LIBS=-lzmq #-L$(ZMQ_ROOT)/src/.libs 
+
+EXE=hwserver hwclient wuserver #wuclient
 
 .PHONY: default
 
-default: hwserver hwclient
+default: $(EXE)
 
 %: %.f f77_zmq.h f77_zmq.o
 	$(FC) $*.f -o $@ f77_zmq.o $(LIBS)
@@ -13,3 +15,6 @@ f77_zmq.o: ../f77_zmq.o
 
 f77_zmq.h: ../f77_zmq.h
 	cp ../f77_zmq.h .
+
+clean:
+	rm -- $(EXE) f77_zmq.o f77_zmq.h
