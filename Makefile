@@ -1,7 +1,7 @@
 # ZeroMQ header file
 
 ifndef ZMQ_H
-ZMQ_H=/usr/include/zmq.h
+$(error Please set the ZMQ_H environment variable to the full path of zmq.h)
 endif
 
 CC=gcc
