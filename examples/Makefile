@@ -1,7 +1,7 @@
-FC=ifort #gfortran 
+FC=gfortran 
 LIBS=-lzmq #-L$(ZMQ_ROOT)/src/.libs 
 
-EXE=hwserver hwclient wuserver wuclient
+EXE=hwserver hwclient wuserver wuclient ventserver ventclient
 
 .PHONY: default
 
@@ -17,4 +17,4 @@ f77_zmq.h: ../f77_zmq.h
 	cp ../f77_zmq.h .
 
 clean:
-	rm -- $(EXE) f77_zmq.o f77_zmq.h
+	rm -- $(EXE) f77_zmq.o f77_zmq.h *.ipc
