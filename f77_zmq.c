@@ -10,6 +10,12 @@ int f77_zmq_ctx_destroy_ (void* *context)
     return zmq_ctx_destroy (*context);
 }
 
+int f77_zmq_ctx_set_ (void* *context, int* option_name, int* option_value)
+{
+  return zmq_ctx_set (*context, *option_name, *option_value);
+}
+
+
 void* f77_zmq_socket_ (void* *context, int* type)
 {
     return zmq_socket (*context, *type);
@@ -48,6 +54,15 @@ int f77_zmq_setsockopt_ (void* *socket, int* option_name, void* option_value, in
 {
   return zmq_setsockopt (*socket, *option_name, option_value, *option_len);
 }
+
+int f77_zmq_getsockopt_ (void* *socket, int* option_name, void *option_value, int *option_len, int dummy)
+{
+  size_t option_len_st = *option_len;
+  return zmq_getsockopt (*socket, *option_name, option_value, &option_len_st);
+  *option_len = option_len_st;
+}
+
+
 
 int f77_zmq_send_ (void* *socket, void* message, int* message_len, int* flags, int dummy)
 {
