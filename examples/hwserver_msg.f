@@ -21,8 +21,9 @@
 
           rc = f77_zmq_msg_recv(request, responder, 0)
 
-          rc = f77_zmq_msg_data(request,buffer)
-          print *,  'Received :', trim(buffer)
+          rc = f77_zmq_msg_copy_from_data (request, buffer)
+
+          print *,  'Received :', buffer(1:rc)
 
           rc = f77_zmq_msg_close(request)
           if (rc /= 0) stop 'f77_zmq_msg_close failed'
@@ -30,10 +31,9 @@
           rc = f77_zmq_msg_init_size(reply,5)
           if (rc /= 0) stop 'f77_zmq_msg_init_size failed'
 
-          rc = f77_zmq_msg_data(reply,buffer)
+          rc = f77_zmq_msg_copy_to_data (request, buffer, 5)
           if (rc /= 0) stop 'f77_zmq_msg_data failed'
-
-          buffer = "World"
+          buffer = 'World'
 
           rc = f77_zmq_msg_send(reply, responder, 0)
 

@@ -1,5 +1,6 @@
-FC=gfortran 
-LIBS=-lzmq -L$(ZMQ_ROOT)/src/.libs 
+FC=ifort -O2 -xHost
+FC=gfortran -g -O0 -Wall -Wno-unused
+LIBS=-lzmq #-L$(ZMQ_ROOT)/src/.libs 
 
 EXE=hwserver hwclient wuserver wuclient ventserver ventclient
 
@@ -17,4 +18,4 @@ f77_zmq.h: ../f77_zmq.h
 	cp ../f77_zmq.h .
 
 clean:
-	rm -- $(EXE) f77_zmq.o f77_zmq.h *.ipc
+	$(RM) -f -- $(EXE) f77_zmq.o f77_zmq.h *.ipc
