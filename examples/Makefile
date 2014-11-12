@@ -1,5 +1,5 @@
 FC=gfortran 
-LIBS=-lzmq #-L$(ZMQ_ROOT)/src/.libs 
+LIBS=-lzmq -L$(ZMQ_ROOT)/src/.libs 
 
 EXE=hwserver hwclient wuserver wuclient ventserver ventclient
 

@@ -20,7 +20,7 @@
         rc = f77_zmq_connect (subscriber, "tcp://localhost:5556")
         if (rc /= 0) stop 'Connect failed'
 
-        if (iargc() > 1) then
+        if (iargc() > 0) then
            call getarg(1,filter) 
         else
            filter = '10001 '
@@ -34,8 +34,8 @@
         total_temp = 0_8
         do update_nbr=1,100
           rc = f77_zmq_recv (subscriber, string, 40, 0);
-          print '(A)',  string
           read(string(1:rc),*) zipcode, temperature, relhumidity
+          print *, string(1:rc)
           total_temp = total_temp + temperature
         enddo
         print *, 'Average temperature for zipcode "'//trim(filter)//
