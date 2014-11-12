@@ -1,5 +1,6 @@
 #include "zmq.h"
-#include "stdlib.h"
+#include <stdlib.h>
+#include <memory.h>
 
 /* Context *
  * ======= */
@@ -35,26 +36,32 @@ int f77_zmq_close_ (void* *socket)
 
 int f77_zmq_bind_ (void* *socket, char* address_in, int address_len)
 {
-  char address[address_len+1];
+  char* address = (char*) malloc(sizeof(char)*(address_len+1));
+  int rc;
   int i;
   for (i=0 ; i<address_len ; i++)
   {
     address[i] = address_in[i];
   }
   address[address_len] = 0;
-  return zmq_bind (*socket, address);
+  rc = zmq_bind (*socket, address);
+  free(address);
+  return rc;
 }
 
 int f77_zmq_connect_ (void* *socket, char* address_in, int address_len)
 {
-  char address[address_len+1];
+  char* address = (char*) malloc(sizeof(char)*(address_len+1));
+  int rc;
   int i;
   for (i=0 ; i<address_len ; i++)
   {
     address[i] = address_in[i];
   }
   address[address_len] = 0;
-  return zmq_connect (*socket, address);
+  rc = zmq_connect (*socket, address);
+  free(address);
+  return rc;
 }
 
 int f77_zmq_setsockopt_ (void* *socket, int* option_name, void* option_value, int* option_len, int dummy)
@@ -107,6 +114,7 @@ int f77_zmq_msg_close_ (zmq_msg_t* *msg)
 int f77_zmq_msg_init_size_ (zmq_msg_t* *msg, int* size_in)
 {
   size_t size = (size_t) *size_in;
+  *msg = (zmq_msg_t*) malloc (sizeof(zmq_msg_t));
   return zmq_msg_init_size (*msg, size);
 }
 
@@ -119,24 +127,23 @@ int f77_zmq_msg_init_data_ (zmq_msg_t* *msg, void *data, int* size_in, zmq_free_
 }
 
 
-// int f77_zmq_msg_send_ (zmq_msg_t* *msg, void* *socket, int* flags)
-// {
-//   return zmq_msg_send (*msg, *socket, *flags);
-// }
-// 
-// 
-// int f77_zmq_msg_recv_ (zmq_msg_t* *msg, void* *socket, int* flags)
-// {
-//   return zmq_msg_recv (*msg, *socket, *flags);
-// }
-// 
-// 
-// int f77_zmq_msg_data_ (zmq_msg_t* *msg, void* data)
-// {
-//   data = zmq_msg_data(*msg);
-//   return (data != NULL);
-// }
-// 
+int f77_zmq_msg_send_ (zmq_msg_t* *msg, void* *socket, int* flags)
+{
+   return zmq_msg_send (*msg, *socket, *flags);
+}
+
+
+int f77_zmq_msg_recv_ (zmq_msg_t* *msg, void* *socket, int* flags)
+{
+   return zmq_msg_recv (*msg, *socket, *flags);
+}
+
+ 
+void* f77_zmq_msg_data_ (zmq_msg_t* *msg)
+{
+  return zmq_msg_data(*msg);
+}
+
 
 int f77_zmq_msg_size_ (zmq_msg_t* *msg)
 {
@@ -144,6 +151,25 @@ int f77_zmq_msg_size_ (zmq_msg_t* *msg)
   return (int) rc;
 }
 
+
+int f77_zmq_msg_copy_from_data_ (zmq_msg_t* *msg, void* buffer, int dummy)
+{
+  size_t sze = zmq_msg_size (*msg);
+  void* data = zmq_msg_data (*msg);
+  memcpy(buffer,data,sze*sizeof(char));
+  return (int) sze;
+}
+
+int f77_zmq_msg_copy_to_data_ (zmq_msg_t* *msg, void* buffer, int* size_in, int dummy)
+{
+  zmq_msg_t* new_message;
+  size_t size = (size_t) *size_in;
+  void* data ;
+  zmq_msg_init_size(new_message,size);
+  data = zmq_msg_data (new_message);
+  memcpy(buffer,data,size*sizeof(char));
+  return zmq_msg_move(*msg,new_message);
+}
 
 int f77_zmq_msg_more_ (zmq_msg_t* *message)
 {

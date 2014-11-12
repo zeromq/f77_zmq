@@ -34,7 +34,7 @@
         total_temp = 0_8
         do update_nbr=1,100
           rc = f77_zmq_recv (subscriber, string, 40, 0);
-          print '(A)',  string
+          print '(A)',  string(1:rc)
           read(string(1:rc),*) zipcode, temperature, relhumidity
           total_temp = total_temp + temperature
         enddo
