@@ -61,7 +61,7 @@ def create_prototypes(lines,file_out):
   for line in lines:
     if line == "":
       continue
-    if line[0] in " #{}":
+    if line[0] in " #{}/":
       continue
     buffer = line.lower().split()
     typ = typ_conv[buffer[0]]
