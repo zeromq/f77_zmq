@@ -95,35 +95,66 @@ int f77_zmq_recv_ (void* *socket, void* message, int* message_len, int* flags, i
 /* Messages *
  * ======== */
 
+void* f77_zmq_msg_create_ ()
+{
+  return malloc (sizeof(zmq_msg_t));
+}
+
+int f77_zmq_msg_destroy_ (zmq_msg_t* *msg)
+{
+  if (*msg != NULL)
+  {
+    free(*msg);
+  }
+}
+
+void* f77_zmq_msg_create_data_ (int* size_in, void* buffer, int* size_buffer, int dummy)
+{
+  int i;
+  void* data = malloc(*size_in * sizeof(char));
+  if (*size_buffer > 0)
+    memcpy(data,buffer,*size_buffer);
+  return data;
+}
+
+int f77_zmq_msg_destroy_data_ (void* *data)
+{
+  if (*data != NULL)
+  {
+    free(*data);
+    data = NULL;
+  }
+}
+
+
 int f77_zmq_msg_init_ (zmq_msg_t* *msg)
 {
-  *msg = (zmq_msg_t*) malloc (sizeof(zmq_msg_t));
   return zmq_msg_init (*msg);
 }
 
 
 int f77_zmq_msg_close_ (zmq_msg_t* *msg)
 {
-  int rc = zmq_msg_close (*msg);
-  if (rc == 0)
-    free(*msg);
-  return rc;
+  return zmq_msg_close (*msg);
 }
 
 
 int f77_zmq_msg_init_size_ (zmq_msg_t* *msg, int* size_in)
 {
   size_t size = (size_t) *size_in;
-  *msg = (zmq_msg_t*) malloc (sizeof(zmq_msg_t));
   return zmq_msg_init_size (*msg, size);
 }
 
 
-int f77_zmq_msg_init_data_ (zmq_msg_t* *msg, void *data, int* size_in, zmq_free_fn *ffn, void *hint)
+void ffn(void* data, void* hint)
+{
+     free(data);
+}
+
+int f77_zmq_msg_init_data_ (zmq_msg_t* *msg, void* *data, int* size_in)
 {
   size_t size = (size_t) *size_in;
-  *msg = (zmq_msg_t*) malloc (sizeof(zmq_msg_t));
-  return zmq_msg_init_data (*msg, data, size, ffn, hint);
+  return zmq_msg_init_data (*msg, *data, size, &ffn, NULL);
 }
 
 
@@ -147,14 +178,14 @@ void* f77_zmq_msg_data_ (zmq_msg_t* *msg)
 
 int f77_zmq_msg_size_ (zmq_msg_t* *msg)
 {
-  size_t rc = zmq_msg_size (*msg);
+  const size_t rc = zmq_msg_size (*msg);
   return (int) rc;
 }
 
 
 int f77_zmq_msg_copy_from_data_ (zmq_msg_t* *msg, void* buffer, int dummy)
 {
-  size_t sze = zmq_msg_size (*msg);
+  const size_t sze = zmq_msg_size (*msg);
   void* data = zmq_msg_data (*msg);
   memcpy(buffer,data,sze*sizeof(char));
   return (int) sze;
@@ -162,13 +193,10 @@ int f77_zmq_msg_copy_from_data_ (zmq_msg_t* *msg, void* buffer, int dummy)
 
 int f77_zmq_msg_copy_to_data_ (zmq_msg_t* *msg, void* buffer, int* size_in, int dummy)
 {
-  zmq_msg_t* new_message;
-  size_t size = (size_t) *size_in;
-  void* data ;
-  zmq_msg_init_size(new_message,size);
-  data = zmq_msg_data (new_message);
-  memcpy(buffer,data,size*sizeof(char));
-  return zmq_msg_move(*msg,new_message);
+  const size_t size = (size_t) *size_in;
+  void* data = zmq_msg_data (*msg);
+  memcpy(data,buffer,size*sizeof(char));
+  return 0;
 }
 
 int f77_zmq_msg_more_ (zmq_msg_t* *message)

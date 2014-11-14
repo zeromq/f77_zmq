@@ -20,5 +20,7 @@
           rc = f77_zmq_send (responder, "world", 5, 0)
         enddo
 
+        rc = f77_zmq_close(responder)
+        rc = f77_zmq_ctx_destroy(context)
       end
 
