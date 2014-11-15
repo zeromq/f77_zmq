@@ -17,7 +17,12 @@
         do
           rc = f77_zmq_recv(responder, buffer, 20, 0)
           print *,  'Received :', buffer(1:rc)
-          rc = f77_zmq_send (responder, "world", 5, 0)
+          if (buffer(1:rc) /= 'end') then
+            rc = f77_zmq_send (responder, "world", 5, 0)
+          else
+            rc = f77_zmq_send (responder, "end", 3, 0)
+            exit
+          endif
         enddo
 
         rc = f77_zmq_close(responder)

@@ -1,6 +1,6 @@
 FC=ifort -O2 -xHost
-FC=gfortran -g -O0 -Wall -Wno-unused
-LIBS=-lzmq #-L$(ZMQ_ROOT)/src/.libs 
+#FC=gfortran -g -O2 -Wall -Wno-unused
+LIBS=-lzmq 
 
 EXE=hwserver hwclient wuserver wuclient ventserver ventclient\
     hwserver_msg hwclient_msg

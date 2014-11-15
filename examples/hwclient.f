@@ -20,6 +20,8 @@
           rc = f77_zmq_recv(requester, buffer, 20, 0)
           print *,  i, 'Received :', buffer(1:rc)
         enddo
+        rc = f77_zmq_send(requester, "end", 3, 0)
+        rc = f77_zmq_recv(requester, buffer, 20, 0)
 
         rc = f77_zmq_close(requester)
         rc = f77_zmq_ctx_destroy(context)
