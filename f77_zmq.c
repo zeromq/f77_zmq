@@ -112,7 +112,7 @@ int f77_zmq_connect_ (void* *socket, char* address_in, int address_len)
 
 int f77_zmq_disconnect_ (void* *socket, char* address, int dummy)
 {
-  return _zmq_disconnect(*socket,address);
+  return zmq_disconnect(*socket,address);
 }
 
 
@@ -151,7 +151,7 @@ int f77_zmq_recv_ (void* *socket, void* message, int* message_len, int* flags, i
 /* Messages *
  * ======== */
 
-void* f77_zmq_msg_create_ ()
+void* f77_zmq_msg_new_ ()
 {
   return malloc (sizeof(zmq_msg_t));
 }
@@ -165,7 +165,7 @@ int f77_zmq_msg_destroy_ (zmq_msg_t* *msg)
   return 0;
 }
 
-void* f77_zmq_msg_create_data_ (int* size_in, void* buffer, int* size_buffer, int dummy)
+void* f77_zmq_msg_data_new_ (int* size_in, void* buffer, int* size_buffer, int dummy)
 {
   int i;
   void* data = malloc(*size_in * sizeof(char));
@@ -296,7 +296,7 @@ int f77_zmq_poll_ (zmq_pollitem_t *items, int *nitems, long *timeout)
 }
 
 
-void* f77_zmq_pollitem_create_ ()
+void* f77_zmq_pollitem_new_ ()
 {
   return malloc (sizeof(zmq_pollitem_t));
 }
@@ -317,4 +317,44 @@ int f77_zmq_proxy_ (void* *frontend, void* *backend, void* *capture)
   return zmq_proxy(*frontend, *backend, *capture);
 }
 
+
+/* Events *
+ * ====== */
+
+void* f77_zmq_event_new_ ()
+{
+  return malloc (sizeof(zmq_event_t));
+}
+
+
+int f77_zmq_event_destroy_ (zmq_event_t* *event)
+{
+  if (*event != NULL)
+  {
+    free(*event);
+  }
+  return 0;
+}
+
+int f77_zmq_event_event_ (zmq_event_t* *event)
+{
+  return (int) (*event)->event;
+}
+
+int f77_zmq_event_set_event_ (zmq_event_t* *event, int* bitfield)
+{
+  (*event)->event = (uint16_t) *bitfield;
+  return 0;
+}
+
+int f77_zmq_event_value_ (zmq_event_t* *event)
+{
+  return (int) (*event)->value;
+}
+
+int f77_zmq_event_set_value_ (zmq_event_t* *event, int* value)
+{
+  (*event)->value = (uint32_t) *value;
+  return 0;
+}
 

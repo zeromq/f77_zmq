@@ -52,7 +52,7 @@ def create_prototypes(lines,file_out):
   typ_conv = {
       'int'    : 'integer' ,
       'float'  : 'real', 
-      'char*'  : 'character*(*)', 
+      'char*'  : 'character*(256)', 
       'double' : 'double precision', 
       'void*'  : 'integer*%d'%(ctypes.sizeof(ctypes.c_voidp)),
       'void'   : None

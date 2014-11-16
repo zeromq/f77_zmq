@@ -23,8 +23,8 @@
         responder = f77_zmq_socket(context, ZMQ_REP)
         rc        = f77_zmq_bind(responder,address)
              
-        request   = f77_zmq_msg_create()
-        reply     = f77_zmq_msg_create()
+        request   = f77_zmq_msg_new()
+        reply     = f77_zmq_msg_new()
        
         do 
 
@@ -89,7 +89,7 @@
 
 
           ! Example with f77_zmq_msg_init_data
-          print *,  'msg_create/destroy_data'
+          print *,  'msg_new/destroy_data'
           rc = f77_zmq_msg_init(request)
           if (rc /= 0) stop 'f77_zmq_msg_init failed'
 
@@ -103,7 +103,7 @@
           if (rc /= 0) stop 'f77_zmq_msg_close failed'
 
 
-          msg_data = f77_zmq_msg_create_data(10,'world',10)
+          msg_data = f77_zmq_msg_data_new(10,'world',10)
 
           rc = f77_zmq_msg_init_data(reply,msg_data,6)
           if (rc /= 0) stop 'f77_zmq_msg_init_data failed'

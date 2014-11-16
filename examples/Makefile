@@ -1,9 +1,9 @@
-FC=ifort -O2 -xHost
-#FC=gfortran -g -O2 -Wall -Wno-unused
+FC=ifort -O2 -xHost -openmp
+#FC=gfortran -g -O2 -Wall -Wno-unused -fopenmp
 LIBS=-lzmq 
 
 EXE=hwserver hwclient wuserver wuclient ventserver ventclient\
-    hwserver_msg hwclient_msg
+    hwserver_msg hwclient_msg socket_monitor
 
 .PHONY: default
 
