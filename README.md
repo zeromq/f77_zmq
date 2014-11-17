@@ -80,3 +80,9 @@ of a few functions.
 
 ### Additional Polling-related functions
 
+* `integer*(ZMQ_PTR) f77_zmq_pollitem_create ()` : Allocates a `zmq_pollitem_t` and returns the pointer
+
+* `integer f77_zmq_pollitem_destroy(item)` : Deallocates the `zmq_pollitem_t`. Return value is `0`.
+
+  + `integer*(ZMQ_PTR) item` : poll item struct
+

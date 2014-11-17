@@ -2,6 +2,36 @@
 #include <stdlib.h>
 #include <memory.h>
 
+/* Guidelines
+ * ==========
+ *
+ * + Fortran-callable function names should start with f77_zmq_ and should end with an underscore.
+ * + A space should be present between the the name of the function and the '(' character for the
+ *   python script to work properly.
+ * + void* return types will be translated to INTEGER(ZMQ_PTR)
+ * + int   return types will be translated to INTEGER
+ *
+ */
+
+/* Helper functions *
+ * ================ */
+
+int f77_zmq_errno_ (void)
+{
+  return zmq_errno ();
+}
+
+char* f77_zmq_strerror_ (int *errnum)
+{
+  return (char*) zmq_strerror (*errnum);
+};
+
+void f77_zmq_version_ (int *major, int *minor, int *patch)
+{
+  zmq_version (major, minor, patch);
+}
+
+
 /* Context *
  * ======= */
 
@@ -13,6 +43,16 @@ void* f77_zmq_ctx_new_ ()
 int f77_zmq_ctx_destroy_ (void* *context)
 {
     return zmq_ctx_destroy (*context);
+}
+
+int f77_zmq_ctx_term_ (void* *context)
+{
+    return zmq_ctx_term (*context);
+}
+
+int f77_zmq_ctx_shutdown_ (void* *context)
+{
+    return zmq_ctx_shutdown (*context);
 }
 
 int f77_zmq_ctx_set_ (void* *context, int* option_name, int* option_value)
@@ -49,6 +89,12 @@ int f77_zmq_bind_ (void* *socket, char* address_in, int address_len)
   return rc;
 }
 
+int f77_zmq_unbind_ (void* *socket, char* endpoint, int dummy)
+{
+  return zmq_unbind(*socket, endpoint);
+}
+
+
 int f77_zmq_connect_ (void* *socket, char* address_in, int address_len)
 {
   char* address = (char*) malloc(sizeof(char)*(address_len+1));
@@ -64,6 +110,12 @@ int f77_zmq_connect_ (void* *socket, char* address_in, int address_len)
   return rc;
 }
 
+int f77_zmq_disconnect_ (void* *socket, char* address, int dummy)
+{
+  return _zmq_disconnect(*socket,address);
+}
+
+
 int f77_zmq_setsockopt_ (void* *socket, int* option_name, void* option_value, int* option_len, int dummy)
 {
   return zmq_setsockopt (*socket, *option_name, option_value, *option_len);
@@ -76,6 +128,10 @@ int f77_zmq_getsockopt_ (void* *socket, int* option_name, void *option_value, in
   *option_len = option_len_st;
 }
 
+int f77_zmq_socket_monitor_ (void* *socket, char* address, int* events, int dummy)
+{
+  return zmq_socket_monitor(*socket,address,*events);
+}
 
 /* Send/Recv *
  * ========= */
@@ -240,5 +296,25 @@ int f77_zmq_poll_ (zmq_pollitem_t *items, int *nitems, long *timeout)
 }
 
 
+void* f77_zmq_pollitem_create_ ()
+{
+  return malloc (sizeof(zmq_pollitem_t));
+}
+
+
+int f77_zmq_pollitem_destroy_ (zmq_pollitem_t* *item)
+{
+  if (*item != NULL)
+  {
+    free(*item);
+  }
+  return 0;
+}
+
+
+int f77_zmq_proxy_ (void* *frontend, void* *backend, void* *capture)
+{
+  return zmq_proxy(*frontend, *backend, *capture);
+}
 
 
