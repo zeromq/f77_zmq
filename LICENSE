@@ -470,8 +470,9 @@ safest to attach them to the start of each source file to most effectively
 convey the exclusion of warranty; and each file should have at least the
 "copyright" line and a pointer to where the full notice is found.
 
-    {description}
-    Copyright (C) {year} {fullname}
+    f77_zmq : Fortran 77 bindings for the ZeroMQ library
+    Copyright (C) 2014 Anthony Scemama 
+    
 
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU Lesser General Public
@@ -488,18 +489,7 @@ convey the exclusion of warranty; and each file should have at least the
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
     USA
 
-Also add information on how to contact you by electronic and paper mail.
-
-You should also get your employer (if you work as a programmer) or your
-school, if any, to sign a "copyright disclaimer" for the library, if
-necessary.  Here is a sample; alter the names:
-
-  Yoyodyne, Inc., hereby disclaims all copyright interest in the
-  library `Frob' (a library for tweaking knobs) written by James Random
-  Hacker.
-
-  {signature of Ty Coon}, 1 April 1990
-  Ty Coon, President of Vice
-
-That's all there is to it!
-
+Anthony Scemama <scemama@irsamc.ups-tlse.fr>
+Laboratoire de Chimie et Physique Quantiques - UMR5626
+Université Paul Sabatier - Bat. 3R1b4, 118 route de Narbonne
+31062 Toulouse Cedex 09, France
