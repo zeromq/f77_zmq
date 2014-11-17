@@ -1,4 +1,4 @@
-### F77\_ZMQ
+# F77\_ZMQ
 
 [![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/scemama/f77_zmq?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
@@ -44,7 +44,7 @@ To maintain F77 compatibility, the structs are created using C functions
 and their pointers are passed to the Fortan. This implies the addition
 of a few functions.
 
-# Additional Message-related functions
+### Additional Message-related functions
 
 * `integer*(ZMQ_PTR) f77_zmq_msg_create ()` : Allocates a `zmq_msg_t` and returns the pointer
 
@@ -78,5 +78,5 @@ of a few functions.
   + `integer size` : Number of bytes to copy
 
 
-<< # Additional Polling-related functions >>
+### Additional Polling-related functions
 
