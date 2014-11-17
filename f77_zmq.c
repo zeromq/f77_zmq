@@ -106,6 +106,7 @@ int f77_zmq_msg_destroy_ (zmq_msg_t* *msg)
   {
     free(*msg);
   }
+  return 0;
 }
 
 void* f77_zmq_msg_create_data_ (int* size_in, void* buffer, int* size_buffer, int dummy)
@@ -124,6 +125,7 @@ int f77_zmq_msg_destroy_data_ (void* *data)
     free(*data);
     data = NULL;
   }
+  return 0;
 }
 
 
