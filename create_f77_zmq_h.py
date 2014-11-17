@@ -1,9 +1,35 @@
 #!/usr/bin/env python
+#
+#    f77_zmq : Fortran 77 bindings for the ZeroMQ library
+#    Copyright (C) 2014 Anthony Scemama 
+#    
+#
+#    This library is free software; you can redistribute it and/or
+#    modify it under the terms of the GNU Lesser General Public
+#    License as published by the Free Software Foundation; either
+#    version 2.1 of the License, or (at your option) any later version.
+#
+#    This library is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+#    Lesser General Public License for more details.
+#
+#    You should have received a copy of the GNU Lesser General Public
+#    License along with this library; if not, write to the Free Software
+#    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
+#    USA
+#
+# Anthony Scemama <scemama@irsamc.ups-tlse.fr>
+# Laboratoire de Chimie et Physique Quantiques - UMR5626
+# Université Paul Sabatier - Bat. 3R1b4, 118 route de Narbonne
+# 31062 Toulouse Cedex 09, France
 
-# The first argument is the location of the ZeroMQ source directory
+
 
 import sys
 import ctypes
+
+# The first argument is the location of the ZeroMQ source directory
 
 if len(sys.argv) != 2:
   print "usage: %s zmq.h"
