@@ -102,6 +102,7 @@ def create_prototypes(lines,file_out):
   keys.sort()
   for k in keys:
     print >>file_out, "      %-20s %s"%(d[k],k)
+    print >>file_out, "      %-20s %s"%("external",k)
   return None
 
 
