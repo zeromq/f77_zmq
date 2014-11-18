@@ -21,7 +21,7 @@
 #
 # Anthony Scemama <scemama@irsamc.ups-tlse.fr>
 # Laboratoire de Chimie et Physique Quantiques - UMR5626
-# Université Paul Sabatier - Bat. 3R1b4, 118 route de Narbonne
+# Universite Paul Sabatier - Bat. 3R1b4, 118 route de Narbonne
 # 31062 Toulouse Cedex 09, France
 
 

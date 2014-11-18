@@ -1,4 +1,4 @@
-/*
+  /*
     f77_zmq : Fortran 77 bindings for the ZeroMQ library
     Copyright (C) 2014 Anthony Scemama 
     
@@ -18,11 +18,11 @@
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
     USA
 
-Anthony Scemama <scemama@irsamc.ups-tlse.fr>
-Laboratoire de Chimie et Physique Quantiques - UMR5626
-Université Paul Sabatier - Bat. 3R1b4, 118 route de Narbonne
-31062 Toulouse Cedex 09, France
-*/
+  Anthony Scemama <scemama@irsamc.ups-tlse.fr>
+  Laboratoire de Chimie et Physique Quantiques - UMR5626
+  Université Paul Sabatier - Bat. 3R1b4, 118 route de Narbonne
+  31062 Toulouse Cedex 09, France
+  */
 
 #include "zmq.h"
 #include <stdlib.h>

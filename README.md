@@ -6,7 +6,8 @@ A Fortran 77 binding library for [ZeroMQ](http://zeromq.org)
 
 ## Usage
 
-Copy the `f77_zmq.h` and `f77_zmq.o` files into your project.
+Copy the `f77_zmq.h` and `libf77zmq.so` or `libf77zmq.a` files into
+your project.
 
 In your Fortran source files, include the `f77_zmq.h` file. This will define all the `ZMQ_*` constants.
 All the pointers (to sockets, messages, polling items, etc) are defined as `integer(ZMQ_PTR)`
@@ -15,7 +16,13 @@ in order to handle 32-bit or 64-bit pointers.
 In your Makefile, compile as follows:
 
 ```
-$(FC) -o $(TARGET) $(OBJ) f77_zmq.o -lzmq
+$(FC) -o $(TARGET) $(OBJ) -lzmq -lf77zmq 
+```
+
+or
+
+```
+$(FC) -o $(TARGET) $(OBJ) -lzmq libf77zmq.a
 ```
 
 Be sure that `libzmq.so.4` is present in your `LD_LIBRARY_PATH` before executing the program.
