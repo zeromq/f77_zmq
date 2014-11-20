@@ -27,6 +27,8 @@
 #include "zmq.h"
 #include <stdlib.h>
 #include <memory.h>
+#include <time.h>
+
 
 /* Guidelines
  * ==========
@@ -52,11 +54,19 @@ char* f77_zmq_strerror_ (int *errnum)
   return (char*) zmq_strerror (*errnum);
 };
 
-void f77_zmq_version_ (int *major, int *minor, int *patch)
+int f77_zmq_version_ (int *major, int *minor, int *patch)
 {
   zmq_version (major, minor, patch);
+  return 0;
 }
 
+int f77_zmq_microsleep_ (int* microsecs)
+{
+  struct timespec ts, ts2;
+  ts.tv_sec  = 0;
+  ts.tv_nsec = 1000L * ((long long) (*microsecs));
+  return nanosleep (&ts, &ts2);
+}
 
 /* Context *
  * ======= */
@@ -383,4 +393,5 @@ int f77_zmq_event_set_value_ (zmq_event_t* *event, int* value)
   (*event)->value = (uint32_t) *value;
   return 0;
 }
+
 
