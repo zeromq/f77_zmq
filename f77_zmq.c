@@ -326,27 +326,54 @@ int f77_zmq_msg_move_ (zmq_msg_t* *dest, zmq_msg_t* *src)
 /* Polling *
  * ======= */
 
-int f77_zmq_poll_ (zmq_pollitem_t *items, int *nitems, long *timeout)
+int f77_zmq_poll_ (zmq_pollitem_t* items, int *nitems, int *timeout)
 {
-  return zmq_poll (items, *nitems, *timeout);
+  return zmq_poll (items, *nitems, (long) *timeout);
 }
 
 
-void* f77_zmq_pollitem_new_ ()
+void* f77_zmq_pollitem_new_ (int* nitems)
 {
-  return malloc (sizeof(zmq_pollitem_t));
+  int i;
+  zmq_pollitem_t *result = malloc ((*nitems)*sizeof(zmq_pollitem_t));
+  memset(result,0,(*nitems)*sizeof(zmq_pollitem_t));
+  return (void*) result;
 }
 
 
-int f77_zmq_pollitem_destroy_ (zmq_pollitem_t* *item)
+int f77_zmq_pollitem_destroy_ (zmq_pollitem_t* item, int* n_items)
 {
-  if (*item != NULL)
+  free(item);
+ /*
+  int i;
+  for (i=0 ; i<*n_items ; i++)
   {
-    free(*item);
+    if (item[i] != NULL)
+    {
+      free(item[i]);
+    }
   }
+  free(item);
+ */
   return 0;
 }
 
+int f77_zmq_pollitem_set_socket_ (zmq_pollitem_t* pollitem, int* i, void* *socket)
+{
+  (pollitem[(*i)-1]).socket = *socket;
+  return 0;
+}
+
+int f77_zmq_pollitem_set_events_ (zmq_pollitem_t* pollitem, int* i, int* events)
+{
+  (pollitem[(*i)-1]).events = (short) *events;
+  return 0;
+}
+
+int f77_zmq_pollitem_revents_ (zmq_pollitem_t* pollitem, int* i)
+{
+  return (int) pollitem[(*i)-1].revents;
+}
 
 int f77_zmq_proxy_ (void* *frontend, void* *backend, void* *capture)
 {
@@ -354,7 +381,7 @@ int f77_zmq_proxy_ (void* *frontend, void* *backend, void* *capture)
 }
 
 
-/* Events *
+/* events *
  * ====== */
 
 void* f77_zmq_event_new_ ()
