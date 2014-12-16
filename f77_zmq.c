@@ -52,7 +52,7 @@ int f77_zmq_errno_ (void)
 char* f77_zmq_strerror_ (int *errnum)
 {
   return (char*) zmq_strerror (*errnum);
-};
+}
 
 int f77_zmq_version_ (int *major, int *minor, int *patch)
 {
@@ -64,7 +64,7 @@ int f77_zmq_microsleep_ (int* microsecs)
 {
   struct timespec ts, ts2;
   ts.tv_sec  = 0;
-  ts.tv_nsec = 1000L * ((long long) (*microsecs));
+  ts.tv_nsec = 1000L * ( (long) (*microsecs));
   return nanosleep (&ts, &ts2);
 }
 
@@ -203,7 +203,6 @@ int f77_zmq_msg_destroy_ (zmq_msg_t* *msg)
 
 void* f77_zmq_msg_data_new_ (int* size_in, void* buffer, int* size_buffer, int dummy)
 {
-  int i;
   void* data = malloc(*size_in * sizeof(char));
   if (*size_buffer > 0)
     memcpy(data,buffer,*size_buffer);

@@ -4,9 +4,9 @@ ifndef ZMQ_H
 $(error Please set the ZMQ_H environment variable to the full path of zmq.h)
 endif
 
-CC=gcc
-#CFLAGS=-O3 -fPIC -Wall -pedantic -g
-CFLAGS=-O3 -fPIC -g
+CC=gcc -fPIC 
+CFLAGS=-O3 -fPIC -Wall -pedantic -g
+#CFLAGS=-O3 -fPIC -g
 
 .PHONY: default
 
