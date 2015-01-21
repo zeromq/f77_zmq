@@ -6,6 +6,8 @@
 ZMQ_TGZ="zeromq-4.0.5.tar.gz"
 
 
+export C_INCLUDE_PATH=${C_INCLUDE_PATH}:./
+
 mkdir -p _build
 pushd _build
 
@@ -46,10 +48,10 @@ popd
 # Build library and examples
 # ==========================
 
-make || exit 1
+make || (ls ; exit 1)
 pushd examples
 FC="gfortran -g -O2 -fopenmp"
-make || exit 1
+make || (ls ; exit 1)
 
 
 # Run tests
