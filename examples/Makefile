@@ -1,6 +1,6 @@
-FC=ifort -O2 -xHost -openmp
-#FC=gfortran -g -O2 -Wall -Wno-unused -fopenmp
-LIBS=-lzmq libf77zmq.a
+#FC=ifort -O2 -xHost -openmp
+FC=gfortran -g -O2 -Wall -Wno-unused -fopenmp
+LIBS=libf77zmq.a -lzmq 
 
 EXE=hwserver hwclient wuserver wuclient ventserver ventclient\
     hwserver_msg hwclient_msg socket_monitor
