@@ -3,7 +3,7 @@
 # Tests the build distribution
 
 
-ZMQ_TGZ="zeromq-4.1.1.tar.gz"
+ZMQ_TGZ="zeromq-4.0.6.tar.gz"
 
 export C_INCLUDE_PATH=${C_INCLUDE_PATH}:./
 
