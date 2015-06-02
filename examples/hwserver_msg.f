@@ -105,7 +105,7 @@
 
           msg_data = f77_zmq_msg_data_new(10,'world',10)
 
-          rc = f77_zmq_msg_init_data(reply,msg_data,6)
+          rc = f77_zmq_msg_init_data(reply,msg_data,5)
           if (rc /= 0) stop 'f77_zmq_msg_init_data failed'
 
           rc = f77_zmq_msg_send(reply, responder, 0)

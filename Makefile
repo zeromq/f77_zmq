@@ -21,8 +21,8 @@ libf77zmq.a: f77_zmq.o
 zmq.h: $(ZMQ_H)
 	cp $(ZMQ_H) .
 
-f77_zmq.o: f77_zmq.c 
-	$(CC) $(CFLAGS) -c $^ -o $@
+f77_zmq.o: f77_zmq.c f77_zmq.h
+	$(CC) $(CFLAGS) -c f77_zmq.c -o $@
 
 f77_zmq.h: create_f77_zmq_h.py zmq.h f77_zmq.c
 	python create_f77_zmq_h.py zmq.h

@@ -112,7 +112,7 @@ int f77_zmq_close_ (void* *socket)
 
 int f77_zmq_bind_ (void* *socket, char* address_in, int address_len)
 {
-  char* address = (char*) malloc(sizeof(char)*(address_len+1));
+  char* address = malloc((address_len+1) * sizeof(*address) );
   int rc;
   int i;
   for (i=0 ; i<address_len ; i++)
@@ -133,7 +133,7 @@ int f77_zmq_unbind_ (void* *socket, char* endpoint, int dummy)
 
 int f77_zmq_connect_ (void* *socket, char* address_in, int address_len)
 {
-  char* address = (char*) malloc(sizeof(char)*(address_len+1));
+  char* address = malloc((address_len+1) * sizeof(*address) );
   int rc;
   int i;
   for (i=0 ; i<address_len ; i++)
@@ -333,7 +333,7 @@ int f77_zmq_poll_ (zmq_pollitem_t* *items, int *nitems, int *timeout)
 
 void* f77_zmq_pollitem_new_ (int* nitems)
 {
-  zmq_pollitem_t *result = malloc ((*nitems)*sizeof(zmq_pollitem_t));
+  zmq_pollitem_t *result = malloc (*nitems * sizeof(*result));
   return (void*) result;
 }
 

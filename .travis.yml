@@ -1,0 +1,9 @@
+language: c
+
+install:
+  - sudo apt-get install gfortran
+  - cd travis_ci ; ./install_zmq.sh
+
+script:
+  - cd travis_ci ; ./test_build.sh
+
