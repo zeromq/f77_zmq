@@ -4,10 +4,11 @@
         integer(ZMQ_PTR)        context
         integer(ZMQ_PTR)        responder
         character*(64)          address
-        character*(20)          buffer
+        character(len=:), allocatable :: buffer
         integer                 rc
        
        
+        allocate (character(len=20) :: buffer)
         address = 'tcp://*:5555'
        
         context   = f77_zmq_ctx_new()
@@ -27,5 +28,6 @@
 
         rc = f77_zmq_close(responder)
         rc = f77_zmq_ctx_destroy(context)
+        deallocate(buffer)
       end
 
