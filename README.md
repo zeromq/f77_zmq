@@ -5,6 +5,8 @@
 
 A Fortran 77 binding library for [ZeroMQ](http://zeromq.org)
 
+Note: For the moment, this binding is broken with the latest version of ZeroMQ (4.1). It works with version 4.0.7. Don't worry, it is just a little thing to fix so it will come soon.
+
 ## Usage
 
 Copy the `f77_zmq.h` and `libf77zmq.so` or `libf77zmq.a` files into
@@ -49,7 +51,7 @@ $ make
 
 In Fortran77 structs don't exist. They have been introduced with Fortran90.
 To maintain F77 compatibility, the structs are created using C functions
-and their pointers are passed to the Fortan. This implies the addition
+and their pointers are passed to the Fortran. This implies the addition
 of a few functions.
 
 ### Additional Message-related functions
