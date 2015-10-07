@@ -3,7 +3,7 @@
 # Tests the build distribution
 
 
-ZMQ_TGZ="zeromq-4.0.6.tar.gz"
+ZMQ_TGZ="zeromq-4.1.3.tar.gz"
 
 export C_INCLUDE_PATH=${C_INCLUDE_PATH}:./
 
@@ -27,14 +27,13 @@ mkdir lib
 
 tar -zxf ${ZMQ_TGZ}
 pushd ${ZMQ_TGZ%.tar.gz}
-./configure || exit 1
-make || exit 1
-#cp src/.libs/libzmq.a ../lib
-cp src/.libs/libzmq.so ../lib/libzmq.so.4
+./configure --with-libsodium=no || exit 1
+make -j 8 || exit 1
+cp .libs/libzmq.so.5.0.0 ../lib/
 cp include/{zmq.h,zmq_utils.h} ../lib
 popd
 pushd lib
-ln -s libzmq.so.4 libzmq.so
+ln -s ibzmq.so.5.0.0 libzmq.so
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$PWD
 export LIBRARY_PATH=$LIBRARY_PATH:$PWD
 export ZMQ_H=$PWD/zmq.h

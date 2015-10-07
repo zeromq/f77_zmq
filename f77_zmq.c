@@ -370,44 +370,4 @@ int f77_zmq_proxy_ (void* *frontend, void* *backend, void* *capture)
 }
 
 
-/* events *
- * ====== */
-
-void* f77_zmq_event_new_ ()
-{
-  return malloc (sizeof(zmq_event_t));
-}
-
-
-int f77_zmq_event_destroy_ (zmq_event_t* *event)
-{
-  if (*event != NULL)
-  {
-    free(*event);
-  }
-  return 0;
-}
-
-int f77_zmq_event_event_ (zmq_event_t* *event)
-{
-  return (int) (*event)->event;
-}
-
-int f77_zmq_event_set_event_ (zmq_event_t* *event, int* bitfield)
-{
-  (*event)->event = (uint16_t) *bitfield;
-  return 0;
-}
-
-int f77_zmq_event_value_ (zmq_event_t* *event)
-{
-  return (int) (*event)->value;
-}
-
-int f77_zmq_event_set_value_ (zmq_event_t* *event, int* value)
-{
-  (*event)->value = (uint32_t) *value;
-  return 0;
-}
-
 
