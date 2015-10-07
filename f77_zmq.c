@@ -30,7 +30,6 @@
 #include <time.h>
 
 
-
 /* Guidelines
  * ==========
  *
@@ -371,40 +370,44 @@ int f77_zmq_proxy_ (void* *frontend, void* *backend, void* *capture)
 }
 
 
+/* events *
+ * ====== */
 
-/* Pthreads bindings *
- * ================= */
-
-#include <pthread.h>
-
-int pthread_create_ (void* *newthread, void* subroutine (void *))
+void* f77_zmq_event_new_ ()
 {
-  int rc;
-  *newthread = malloc (sizeof(pthread_t));
-  rc = pthread_create( (pthread_t*) *newthread, NULL, subroutine, NULL);
-  return rc;
-}
-
-int pthread_join_ (void* *thread)
-{
-  int rc;
-  pthread_t* thread_pointer = (pthread_t*) *thread;
-  rc = pthread_join( *thread_pointer, NULL );
-  free(thread_pointer);
-  *thread = NULL;
-  return rc;
+  return malloc (sizeof(zmq_event_t));
 }
 
 
-int pthread_detach_ (void* *thread)
+int f77_zmq_event_destroy_ (zmq_event_t* *event)
 {
-  int rc;
-  pthread_t* thread_pointer = (pthread_t*) *thread;
-  rc = pthread_detach( *thread_pointer );
-  free(thread_pointer);
-  *thread = NULL;
-  return rc;
+  if (*event != NULL)
+  {
+    free(*event);
+  }
+  return 0;
 }
 
+int f77_zmq_event_event_ (zmq_event_t* *event)
+{
+  return (int) (*event)->event;
+}
+
+int f77_zmq_event_set_event_ (zmq_event_t* *event, int* bitfield)
+{
+  (*event)->event = (uint16_t) *bitfield;
+  return 0;
+}
+
+int f77_zmq_event_value_ (zmq_event_t* *event)
+{
+  return (int) (*event)->value;
+}
+
+int f77_zmq_event_set_value_ (zmq_event_t* *event, int* value)
+{
+  (*event)->value = (uint32_t) *value;
+  return 0;
+}
 
 
