@@ -32,7 +32,7 @@ import ctypes
 # The first argument is the location of the ZeroMQ source directory
 
 if len(sys.argv) != 2:
-  print "usage: %s zmq.h"
+  print "usage: %s zmq.h"%sys.argv[0]
   sys.exit(1)
 
 ZMQ_H = sys.argv[1]
@@ -76,12 +76,12 @@ def create_dict_of_defines(lines,file_out):
 def create_prototypes(lines,file_out):
   """lines is a list of lines coming from the f77_zmq.c file"""
   typ_conv = {
-      'int'    : 'integer' ,
-      'float'  : 'real', 
-      'char*'  : 'character*(64)', 
-      'double' : 'double precision', 
-      'void*'  : 'integer*%d'%(ctypes.sizeof(ctypes.c_voidp)),
-      'void'   : None
+      'int'     : 'integer' ,
+      'float'   : 'real', 
+      'char*'   : 'character*(64)', 
+      'double'  : 'double precision', 
+      'void*'   : 'integer*%d'%(ctypes.sizeof(ctypes.c_voidp)),
+      'void'    : None,
       }
   # Get all the functions of the f77_zmq.c file
   d = {}
@@ -108,12 +108,11 @@ def create_prototypes(lines,file_out):
 
 
 def main():
-  file_out = open('f77_zmq.h','w')
-
   file_in = open( ZMQ_H, 'r' )
   lines = create_lines(file_in)
   file_in.close()
 
+  file_out = open('f77_zmq.h','w')
   create_dict_of_defines(lines,file_out)
 
   file_in = open( 'f77_zmq.c', 'r' )
