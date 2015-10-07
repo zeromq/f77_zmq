@@ -30,6 +30,7 @@
 #include <time.h>
 
 
+
 /* Guidelines
  * ==========
  *
@@ -367,6 +368,42 @@ int f77_zmq_pollitem_revents_ (zmq_pollitem_t* *pollitem, int* i)
 int f77_zmq_proxy_ (void* *frontend, void* *backend, void* *capture)
 {
   return zmq_proxy(*frontend, *backend, *capture);
+}
+
+
+
+/* Pthreads bindings *
+ * ================= */
+
+#include <pthread.h>
+
+int pthread_create_ (void* *newthread, void* subroutine (void *))
+{
+  int rc;
+  *newthread = malloc (sizeof(pthread_t));
+  rc = pthread_create( (pthread_t*) *newthread, NULL, subroutine, NULL);
+  return rc;
+}
+
+int pthread_join_ (void* *thread)
+{
+  int rc;
+  pthread_t* thread_pointer = (pthread_t*) *thread;
+  rc = pthread_join( *thread_pointer, NULL );
+  free(thread_pointer);
+  *thread = NULL;
+  return rc;
+}
+
+
+int pthread_detach_ (void* *thread)
+{
+  int rc;
+  pthread_t* thread_pointer = (pthread_t*) *thread;
+  rc = pthread_detach( *thread_pointer );
+  free(thread_pointer);
+  *thread = NULL;
+  return rc;
 }
 
 
