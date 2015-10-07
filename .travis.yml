@@ -5,5 +5,5 @@ install:
   - cd travis_ci ; ./install_zmq.sh
 
 script:
-  - cd travis_ci ; ./test_build.sh
+  - ./test_build.sh
 
