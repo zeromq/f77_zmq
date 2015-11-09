@@ -32,7 +32,7 @@ import ctypes
 # The first argument is the location of the ZeroMQ source directory
 
 if len(sys.argv) != 2:
-  print "usage: %s zmq.h"
+  print "usage: %s zmq.h"%(sys.argv[0])
   sys.exit(1)
 
 ZMQ_H = sys.argv[1]
