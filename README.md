@@ -5,7 +5,7 @@
 
 A Fortran 77 binding library for [ZeroMQ](http://zeromq.org)
 
-Note: For the moment, this binding is broken with the latest version of ZeroMQ (4.1). It works with version 4.0.7. Don't worry, it is just a little thing to fix so it will come soon.
+This binding works with [ZeroMQ 4.1.3](https://github.com/zeromq/zeromq4-1).
 
 ## Usage
 
@@ -97,32 +97,5 @@ of a few functions.
   + `integer(ZMQ_PTR) item` : poll item struct
 
 
-### Additional Event-related functions
-
-* `integer(ZMQ_PTR) f77_zmq_event_new()` : Allocates a `zmq_event_t` and returns the pointer
-
-* `integer f77_zmq_event_destroy(event)` : Deallocates the `zmq_event_t`. Return value is `0`.
-
-  + `integer(ZMQ_PTR) event` : event struct
-
-* `int f77_zmq_event_event(event)` : Returns the event field of the `zmq_event_t`.
-
-  + `integer(ZMQ_PTR) event` : `zmq_event_t` struct
-
-* `int f77_zmq_event_set_event(event, bitfield) : Sets the event field of the `zmq_event_t`.
-  Returns `0`.
-
-  + `integer(ZMQ_PTR) event` : `zmq_event_t` struct
-  + `integer bitfield` : id of the event as bitfield
-
-* `int f77_zmq_event_value(event)` : Returns the value field of the `zmq_event_t`.
-
-  + `integer(ZMQ_PTR) event` : `zmq_event_t` struct
-
-* `int f77_zmq_event_set_value(event, value) : Sets the value field of the `zmq_event_t`.
-  Returns `0`.
-
-  + `integer(ZMQ_PTR) event` : `zmq_event_t` struct
-  + `integer value` : value is either error code, fd or reconnect interval
 
 
