@@ -5,7 +5,7 @@
 export C_INCLUDE_PATH=${C_INCLUDE_PATH}:./
 
 pushd lib
-ln -s libzmq.so.4 libzmq.so
+ln -s libzmq.so.5 libzmq.so
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$PWD
 export LIBRARY_PATH=$LIBRARY_PATH:$PWD
 export ZMQ_H=$PWD/zmq.h
@@ -15,10 +15,10 @@ cd ..
 # Build library and examples
 # ==========================
 
-make || (ls ; exit 1)
+make -j 4 || (ls ; exit 1)
 pushd examples
 FC="gfortran -g -O2 -fopenmp"
-make || (ls ; exit 1)
+make -j 4 || (ls ; exit 1)
 
 
 # Run tests
@@ -61,5 +61,5 @@ EOF
 ./hwclient_msg > hwclient_msg.out ;
 wait
 
-diff hwserver_msg.out ref1 || exit 1 
-diff hwclient_msg.out ref2 || exit 1
+diff hwserver_msg.out ref1 || exit 1 && echo server OK
+diff hwclient_msg.out ref2 || exit 1 && echo client OK
