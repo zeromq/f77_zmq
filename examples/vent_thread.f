@@ -30,7 +30,7 @@
         msecs = 1
         do while (msecs >= 0)
             rc = f77_zmq_recv (receiver, string, 20, 0)
-            print '(A)', string(1:rc)
+!            print '(A)', string(1:rc)
             read(string(1:rc),*) msecs
             call milli_sleep(msecs)
             rc = f77_zmq_send (sender, "", 0, 0) ! Send results to sink
@@ -93,7 +93,7 @@
             workload = int(100.*r) + 1
             total_msec = total_msec + workload
             write(string,'(I8)') workload
-            print '(A)', string
+!            print '(A)', string
             rc = f77_zmq_send(sender,string,len(trim(string)),0)
         enddo
         do task_nbr=1,4
