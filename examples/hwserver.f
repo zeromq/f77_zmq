@@ -15,7 +15,9 @@
         responder = f77_zmq_socket(context, ZMQ_REP)
         rc        = f77_zmq_bind(responder,address)
        
+        print *,  rc
         do
+          print *,  "rc = f77_zmq_recv(responder, buffer, 20, 0)"
           rc = f77_zmq_recv(responder, buffer, 20, 0)
           print *,  'Received :', buffer(1:rc)
           if (buffer(1:rc) /= 'end') then

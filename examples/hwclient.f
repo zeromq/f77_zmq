@@ -15,9 +15,14 @@
         requester = f77_zmq_socket(context, ZMQ_REQ)
         rc        = f77_zmq_connect(requester,address)
        
+        print *,  rc
         do i=1,10
+          print *,  "rc = f77_zmq_send(requester"
           rc = f77_zmq_send(requester, "Hello!", 6, 0)
+          print *,  rc
+          print *,  "rc = f77_zmq_recv(requester, buffer, 20, 0)"
           rc = f77_zmq_recv(requester, buffer, 20, 0)
+          print *,  rc
           print *,  i, 'Received :', buffer(1:rc)
         enddo
         rc = f77_zmq_send(requester, "end", 3, 0)
