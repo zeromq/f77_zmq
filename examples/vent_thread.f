@@ -128,6 +128,7 @@
 !        if (rc /= 0) then
 !          stop 'Failed to detach thread 5'
 !        endif
+!        do i=1,4
         do i=1,5
           rc = pthread_join( thread(i) )
           if (rc /= 0) then
