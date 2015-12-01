@@ -57,9 +57,19 @@ cat << EOF > ref2
           10 Received :World
 EOF
 
+cat << EOF > ref3
+ Joined            1
+ Joined            2
+ Joined            3
+ Joined            4
+ Joined            5
+EOF
+
 ./hwserver_msg > hwserver_msg.out &
 ./hwclient_msg > hwclient_msg.out ;
+./vent_thread | tail -5 > vent_thread.out ;
 wait
 
 diff hwserver_msg.out ref1 || exit 1 && echo server OK
 diff hwclient_msg.out ref2 || exit 1 && echo client OK
+diff vent_thread.out  ref3 || exit 1 && echo vent_thread OK
