@@ -130,10 +130,27 @@ int f77_zmq_bind_ (void* *socket, char* address_in, int address_len)
   return rc;
 }
 
-int f77_zmq_unbind_ (void* *socket, char* endpoint, int dummy)
+
+int f77_zmq_unbind_ (void* *socket, char* address_in, int address_len)
 {
-  return zmq_unbind(*socket, endpoint);
+  char* address = malloc((address_len+1) * sizeof(*address) );
+  int rc;
+  int i;
+  for (i=0 ; i<address_len ; i++)
+  {
+    address[i] = address_in[i];
+    if (address_in[i] == ' ')
+    {
+      address[i] = 0;
+      i = address_len;
+    }
+  }
+  address[address_len] = 0;
+  rc = zmq_unbind (*socket, address);
+  free(address);
+  return rc;
 }
+
 
 
 int f77_zmq_connect_ (void* *socket, char* address_in, int address_len)
@@ -156,11 +173,26 @@ int f77_zmq_connect_ (void* *socket, char* address_in, int address_len)
   return rc;
 }
 
-int f77_zmq_disconnect_ (void* *socket, char* address, int dummy)
-{
-  return zmq_disconnect(*socket,address);
-}
 
+int f77_zmq_disconnect_ (void* *socket, char* address_in, int address_len)
+{
+  char* address = malloc((address_len+1) * sizeof(*address) );
+  int rc;
+  int i;
+  for (i=0 ; i<address_len ; i++)
+  {
+    address[i] = address_in[i];
+    if (address_in[i] == ' ')
+    {
+      address[i] = 0;
+      i = address_len;
+    }
+  }
+  address[address_len] = 0;
+  rc = zmq_disconnect (*socket, address);
+  free(address);
+  return rc;
+}
 
 int f77_zmq_setsockopt_ (void* *socket, int* option_name, void* option_value, int* option_len, int dummy)
 {
@@ -174,9 +206,24 @@ int f77_zmq_getsockopt_ (void* *socket, int* option_name, void *option_value, in
   *option_len = option_len_st;
 }
 
-int f77_zmq_socket_monitor_ (void* *socket, char* address, int* events, int dummy)
+int f77_zmq_socket_monitor_ (void* *socket, char* address_in, int* events, int address_len)
 {
-  return zmq_socket_monitor(*socket,address,*events);
+  char* address = malloc((address_len+1) * sizeof(*address) );
+  int rc;
+  int i;
+  for (i=0 ; i<address_len ; i++)
+  {
+    address[i] = address_in[i];
+    if (address_in[i] == ' ')
+    {
+      address[i] = 0;
+      i = address_len;
+    }
+  }
+  address[address_len] = 0;
+  rc = zmq_socket_monitor(*socket,address,*events);
+  free(address);
+  return rc;
 }
 
 /* Send/Recv *
