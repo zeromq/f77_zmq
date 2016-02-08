@@ -1,7 +1,11 @@
-language: c
+sudo: false
+
+addons:
+  apt:
+    packages:
+    - gfortran
 
 install:
-  - sudo apt-get install gfortran
   - cd travis_ci ; ./install_zmq.sh
 
 script:
