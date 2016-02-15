@@ -442,6 +442,14 @@ int pthread_create_ (void* *newthread, void* subroutine (void *))
   return rc;
 }
 
+int pthread_create_arg_ (void* *newthread, void* subroutine (void *), void* arg)
+{
+  int rc;
+  *newthread = malloc (sizeof(pthread_t));
+  rc = pthread_create( (pthread_t*) *newthread, NULL, subroutine, arg);
+  return rc;
+}
+
 int pthread_join_ (void* *thread)
 {
   int rc;
