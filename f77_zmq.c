@@ -377,10 +377,10 @@ int f77_zmq_msg_get_ (zmq_msg_t* *message, int *property)
 }
 
 
-int f77_zmq_msg_gets_ (zmq_msg_t* *message, char* *property_in, int property_len)
+char* f77_zmq_msg_gets_ (zmq_msg_t* *message, char* property_in, int property_len)
 {
-  char* property = malloc((property_len+1) * sizeof(*property_in) );
-  int rc;
+  const char* rc;
+  char* property = malloc((property_len+1) * sizeof(*property) );
   int i;
   for (i=0 ; i<property_len ; i++)
   {
@@ -392,7 +392,9 @@ int f77_zmq_msg_gets_ (zmq_msg_t* *message, char* *property_in, int property_len
     }
   }
   property[property_len] = 0;
-  return zmq_msg_gets (*message, *property);
+  rc = zmq_msg_gets (*message, property);
+  free(property);
+  return (char*) rc;
 }
 
 
@@ -414,10 +416,6 @@ int f77_zmq_msg_move_ (zmq_msg_t* *dest, zmq_msg_t* *src)
 }
 
 
-int f77_zmq_msg_close_ (zmq_msg_t* *msg)
-{
-  return zmq_msg_close (*msg);
-}
 
 
 /* Polling *
