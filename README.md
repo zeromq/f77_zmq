@@ -5,7 +5,7 @@
 
 A Fortran 77 binding library for [ZeroMQ](http://zeromq.org)
 
-This binding works with [ZeroMQ 4.1.3](https://github.com/zeromq/zeromq4-1).
+This binding works with [ZeroMQ 4.1.4](https://github.com/zeromq/zeromq4-1).
 
 ## Usage
 
