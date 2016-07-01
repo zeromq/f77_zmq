@@ -42,7 +42,7 @@
  */
 
 /* Helper functions *
- * ================ */
+  ================ */
 
 int f77_zmq_errno_ (void)
 {
@@ -76,11 +76,6 @@ void* f77_zmq_ctx_new_ ()
     return zmq_ctx_new ();
 }
 
-int f77_zmq_ctx_destroy_ (void* *context)
-{
-    return zmq_ctx_destroy (*context);
-}
-
 int f77_zmq_ctx_term_ (void* *context)
 {
     return zmq_ctx_term (*context);
@@ -91,9 +86,25 @@ int f77_zmq_ctx_shutdown_ (void* *context)
     return zmq_ctx_shutdown (*context);
 }
 
+int f77_zmq_ctx_get_ (void* *context, int* option_name)
+{
+  return zmq_ctx_get (*context, *option_name );
+}
+
 int f77_zmq_ctx_set_ (void* *context, int* option_name, int* option_value)
 {
   return zmq_ctx_set (*context, *option_name, *option_value);
+}
+
+/* Old (legacy) API */
+int f77_zmq_term_ (void* *context)
+{
+    return zmq_term (*context);
+}
+
+int f77_zmq_ctx_destroy_ (void* *context)
+{
+    return zmq_ctx_destroy (*context);
 }
 
 
@@ -234,6 +245,11 @@ int f77_zmq_send_ (void* *socket, void* message, int* message_len, int* flags, i
   return zmq_send (*socket, message, *message_len, *flags);
 }
 
+int f77_zmq_send_const_ (void* *socket, void* message, int* message_len, int* flags, int dummy)
+{
+  return zmq_send_const (*socket, message, *message_len, *flags);
+}
+
 int f77_zmq_recv_ (void* *socket, void* message, int* message_len, int* flags, int dummy)
 {
   return zmq_recv (*socket, message, *message_len, *flags);
@@ -361,6 +377,27 @@ int f77_zmq_msg_get_ (zmq_msg_t* *message, int *property)
 }
 
 
+char* f77_zmq_msg_gets_ (zmq_msg_t* *message, char* property_in, int property_len)
+{
+  const char* rc;
+  char* property = malloc((property_len+1) * sizeof(*property) );
+  int i;
+  for (i=0 ; i<property_len ; i++)
+  {
+    property[i] = property_in[i];
+    if (property_in[i] == ' ')
+    {
+      property[i] = 0;
+      i = property_len;
+    }
+  }
+  property[property_len] = 0;
+  rc = zmq_msg_gets (*message, property);
+  free(property);
+  return (char*) rc;
+}
+
+
 int f77_zmq_msg_set_ (zmq_msg_t* *message, int *property, int *value)
 {
   return zmq_msg_set (*message, *property, *value);
@@ -377,6 +414,8 @@ int f77_zmq_msg_move_ (zmq_msg_t* *dest, zmq_msg_t* *src)
 {
   return zmq_msg_move (*dest, *src);
 }
+
+
 
 
 /* Polling *
@@ -424,6 +463,12 @@ int f77_zmq_pollitem_revents_ (zmq_pollitem_t* *pollitem, int* i)
 int f77_zmq_proxy_ (void* *frontend, void* *backend, void* *capture)
 {
   return zmq_proxy(*frontend, *backend, *capture);
+}
+
+int f77_zmq_proxy_steerable_ (void* *frontend, void* *backend, void* *capture,
+    void* *control)
+{
+  return zmq_proxy_steerable(*frontend, *backend, *capture, *control);
 }
 
 
