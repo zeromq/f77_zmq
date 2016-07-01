@@ -25,7 +25,7 @@ f77_zmq.o: f77_zmq.c f77_zmq.h
 	$(CC) $(CFLAGS) -c f77_zmq.c -o $@
 
 f77_zmq.h: create_f77_zmq_h.py zmq.h f77_zmq.c
-	python create_f77_zmq_h.py zmq.h
+	python2 create_f77_zmq_h.py zmq.h || python3 create_f77_zmq_h_py3.py
 
 clean:
 	$(RM) -f -- f77_zmq.o f77_zmq.h
