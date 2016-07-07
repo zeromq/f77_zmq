@@ -12,20 +12,23 @@ CFLAGS=-O3 -fPIC -Wall -pedantic -g
 
 default: libf77zmq.so libf77zmq.a f77_zmq.h
 
+$(ZMQ_H):
+	$(error $(ZMQ_H) : file not found)
+
+zmq.h: $(ZMQ_H)
+	cp $(ZMQ_H) zmq.h
+
 libf77zmq.so: f77_zmq.o
 	$(CC) -shared $^ -o $@
 
 libf77zmq.a: f77_zmq.o 
 	$(AR) cr $@  $^
 
-zmq.h: $(ZMQ_H)
-	cp $(ZMQ_H) .
-
 f77_zmq.o: f77_zmq.c f77_zmq.h
 	$(CC) $(CFLAGS) -c f77_zmq.c -o $@
 
 f77_zmq.h: create_f77_zmq_h.py zmq.h f77_zmq.c
-	python2 create_f77_zmq_h.py zmq.h || python3 create_f77_zmq_h_py3.py zmq.h
+	python create_f77_zmq_h.py zmq.h
 
 clean:
 	$(RM) -f -- f77_zmq.o f77_zmq.h
