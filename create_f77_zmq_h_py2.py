@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python2
 #
 #    f77_zmq : Fortran 77 bindings for the ZeroMQ library
 #    Copyright (C) 2014 Anthony Scemama 
@@ -46,24 +46,23 @@ def create_dict_of_defines(lines,file_out):
       value = " ".join(buffer[2:])
       if key[0] == '_' or '(' in key or ',' in value:
         continue
-      d[key] = value
       command = "%(key)s=%(value)s\nd['%(key)s']=%(key)s"%locals()
-      exec(command, locals())
+      exec command in locals()
 
   # Add the version number:
-  d['ZMQ_VERSION'] = int(d['ZMQ_VERSION_MAJOR'])*10000 + int(d['ZMQ_VERSION_MINOR'])*100 + int(d['ZMQ_VERSION_PATCH'])
+  d['ZMQ_VERSION'] = ZMQ_VERSION_MAJOR*10000 + ZMQ_VERSION_MINOR*100 + ZMQ_VERSION_PATCH
   d['ZMQ_PTR'] = ctypes.sizeof(ctypes.c_voidp)
-  print("===========================================")
-  print("ZMQ_PTR set to %d (for %d-bit architectures)"%(d['ZMQ_PTR'],d['ZMQ_PTR']*8))
-  print("===========================================")
+  print "==========================================="
+  print "ZMQ_PTR set to %d (for %d-bit architectures)"%(d['ZMQ_PTR'],d['ZMQ_PTR']*8)
+  print "==========================================="
 
   # Print to file
   keys = list( d.keys() )
   keys.sort()
   for k in keys:
-    print("      integer %s"%(k), file=file_out)
+    print >>file_out, "      integer %s"%(k)
   for k in keys:
-    print("      parameter ( %-20s = %s )"%(k, d[k]), file=file_out)
+    print >>file_out, "      parameter ( %-20s = %s )"%(k, d[k])
   return None
 
 def create_prototypes(lines,file_out):
@@ -94,8 +93,8 @@ def create_prototypes(lines,file_out):
   keys = list( d.keys() )
   keys.sort()
   for k in keys:
-    print("      %-20s %s"%(d[k],k), file=file_out)
-    print("      %-20s %s"%("external",k), file=file_out)
+    print >>file_out, "      %-20s %s"%(d[k],k)
+    print >>file_out, "      %-20s %s"%("external",k)
   return None
 
 
@@ -104,7 +103,7 @@ def main():
   # The first argument is the zmq.h file
 
   if len(sys.argv) != 2:
-    print("usage: %s zmq.h"%(sys.argv[0]))
+    print "usage: %s zmq.h"%(sys.argv[0])
     sys.exit(1)
 
   ZMQ_H = sys.argv[1]
