@@ -207,7 +207,12 @@ int f77_zmq_disconnect_ (void* *socket, char* address_in, int address_len)
 
 int f77_zmq_setsockopt_ (void* *socket, int* option_name, void* option_value, int* option_len, int dummy)
 {
-  return zmq_setsockopt (*socket, *option_name, option_value, *option_len);
+  int result;
+  void * value = malloc(*option_len);
+  memcpy(value, option_value, (size_t) *option_len);
+  result = zmq_setsockopt (*socket, *option_name, value, *option_len);
+  free(value);
+  return result;
 }
 
 int f77_zmq_getsockopt_ (void* *socket, int* option_name, void *option_value, int *option_len, int dummy)
