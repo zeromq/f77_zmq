@@ -2,7 +2,7 @@
 FC=gfortran -g -O2 -Wall -Wno-unused -fopenmp
 LIBS=libf77zmq.a -lzmq 
 
-EXE=hwserver hwclient wuserver wuclient ventserver ventclient\
+EXE=hwserver hwclient wuserver wuclient ventserver ventclient python_client\
     hwserver_msg hwclient_msg vent_thread
 
 .PHONY: default
