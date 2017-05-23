@@ -68,7 +68,7 @@ def create_dict_of_defines(lines,file_out):
 def create_prototypes(lines,file_out):
   """lines is a list of lines coming from the f77_zmq.c file"""
   typ_conv = {
-      'long int' : 'integer*8' ,
+      'long'   : 'integer*8' ,
       'int'    : 'integer' ,
       'float'  : 'real', 
       'char*'  : 'character*(64)', 

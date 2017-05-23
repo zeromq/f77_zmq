@@ -261,19 +261,19 @@ int f77_zmq_recv_ (void* *socket, void* message, int* message_len, int* flags, i
 }
 
 
-long int f77_zmq_send8_ (void* *socket, void* message, long int* message_len, int* flags, int dummy)
+long f77_zmq_send8_ (void* *socket, void* message, long* message_len, int* flags, int dummy)
 {
-  return (long int) zmq_send (*socket, message, (size_t) *message_len, *flags);
+  return (long) zmq_send (*socket, message, (size_t) *message_len, *flags);
 }
 
-long int f77_zmq_send_const8_ (void* *socket, void* message, long int* message_len, int* flags, int dummy)
+long f77_zmq_send_const8_ (void* *socket, void* message, long* message_len, int* flags, int dummy)
 {
-  return (long int) zmq_send_const (*socket, message, (size_t) *message_len, *flags);
+  return (long) zmq_send_const (*socket, message, (size_t) *message_len, *flags);
 }
 
-long int f77_zmq_recv8_ (void* *socket, void* message, long int* message_len, int* flags, int dummy)
+long f77_zmq_recv8_ (void* *socket, void* message, long* message_len, int* flags, int dummy)
 {
-  return (long int) zmq_recv (*socket, message, (size_t) *message_len, *flags);
+  return (long) zmq_recv (*socket, message, (size_t) *message_len, *flags);
 }
 
 
@@ -351,9 +351,9 @@ int f77_zmq_msg_send_ (zmq_msg_t* *msg, void* *socket, int* flags)
 }
 
 
-long int f77_zmq_msg_send8_ (zmq_msg_t* *msg, void* *socket, int* flags)
+long f77_zmq_msg_send8_ (zmq_msg_t* *msg, void* *socket, int* flags)
 {
-   return (long int) zmq_msg_send (*msg, *socket, *flags);
+   return (long) zmq_msg_send (*msg, *socket, *flags);
 }
 
 
@@ -362,9 +362,9 @@ int f77_zmq_msg_recv_ (zmq_msg_t* *msg, void* *socket, int* flags)
    return (int) zmq_msg_recv (*msg, *socket, *flags);
 }
 
-long int f77_zmq_msg_recv8_ (zmq_msg_t* *msg, void* *socket, int* flags)
+long f77_zmq_msg_recv8_ (zmq_msg_t* *msg, void* *socket, int* flags)
 {
-   return (long int) zmq_msg_recv (*msg, *socket, *flags);
+   return (long) zmq_msg_recv (*msg, *socket, *flags);
 }
 
  
@@ -380,10 +380,10 @@ int f77_zmq_msg_size_ (zmq_msg_t* *msg)
   return (int) rc;
 }
 
-long int f77_zmq_msg_size8_ (zmq_msg_t* *msg)
+long f77_zmq_msg_size8_ (zmq_msg_t* *msg)
 {
   const size_t rc = zmq_msg_size (*msg);
-  return (long int) rc;
+  return (long) rc;
 }
 
 
@@ -403,7 +403,7 @@ int f77_zmq_msg_copy_to_data_ (zmq_msg_t* *msg, void* buffer, int* size_in, int 
   return 0;
 }
 
-int f77_zmq_msg_copy_to_data8_ (zmq_msg_t* *msg, void* buffer, long int* size_in, int dummy)
+int f77_zmq_msg_copy_to_data8_ (zmq_msg_t* *msg, void* buffer, long* size_in, int dummy)
 {
   const size_t size = (size_t) *size_in;
   void* data = zmq_msg_data (*msg);
