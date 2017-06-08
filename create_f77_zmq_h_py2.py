@@ -1,8 +1,8 @@
 #!/usr/bin/env python2
 #
 #    f77_zmq : Fortran 77 bindings for the ZeroMQ library
-#    Copyright (C) 2014 Anthony Scemama 
-#    
+#    Copyright (C) 2014 Anthony Scemama
+#
 #
 #    This library is free software; you can redistribute it and/or
 #    modify it under the terms of the GNU Lesser General Public
@@ -25,7 +25,7 @@
 # 31062 Toulouse Cedex 09, France
 
 
-
+import re
 import sys
 import ctypes
 
@@ -47,6 +47,7 @@ def create_dict_of_defines(lines,file_out):
       if key[0] == '_' or '(' in key or ',' in value:
         continue
       command = "%(key)s=%(value)s\nd['%(key)s']=%(key)s"%locals()
+      command = re.sub("/\*.*?\*/", "", command)
       exec command in locals()
 
   # Add the version number:
@@ -70,9 +71,9 @@ def create_prototypes(lines,file_out):
   typ_conv = {
       'long'   : 'integer*8' ,
       'int'    : 'integer' ,
-      'float'  : 'real', 
-      'char*'  : 'character*(64)', 
-      'double' : 'double precision', 
+      'float'  : 'real',
+      'char*'  : 'character*(64)',
+      'double' : 'double precision',
       'void*'  : 'integer*%d'%(ctypes.sizeof(ctypes.c_voidp)),
       'void'   : None
       }
