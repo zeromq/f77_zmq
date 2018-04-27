@@ -47,16 +47,15 @@ def create_dict_of_defines(lines,file_out):
         value = int(eval(" ".join(buffer[2:]).strip()))
       except:
         continue
-      if value == "" or value.startswith("_"):
-        continue
       if key[0] == '_' or '(' in key:
         continue
+      d[key] = value
       command = "%(key)s=%(value)d\nd['%(key)s']=%(key)s"%locals()
       command = re.sub("/\*.*?\*/", "", command)
       exec command in locals()
 
   # Add the version number:
-  d['ZMQ_VERSION'] = ZMQ_VERSION_MAJOR*10000 + ZMQ_VERSION_MINOR*100 + ZMQ_VERSION_PATCH
+  d['ZMQ_VERSION'] = int(d['ZMQ_VERSION_MAJOR'])*10000 + int(d['ZMQ_VERSION_MINOR'])*100 + int(d['ZMQ_VERSION_PATCH'])
   d['ZMQ_PTR'] = ctypes.sizeof(ctypes.c_voidp)
   print "==========================================="
   print "ZMQ_PTR set to %d (for %d-bit architectures)"%(d['ZMQ_PTR'],d['ZMQ_PTR']*8)
@@ -69,7 +68,7 @@ def create_dict_of_defines(lines,file_out):
     print >>file_out, "      integer %s"%(k)
   for k in keys:
     buffer = "      parameter(%s=%s)"%(k, d[k])
-    if len(buffer > 72):
+    if len(buffer) > 72:
         buffer = "      parameter(\n     & %s=%s)"%(k, d[k])
     print >>file_out, buffer
 

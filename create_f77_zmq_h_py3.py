@@ -50,7 +50,7 @@ def create_dict_of_defines(lines,file_out):
       if key[0] == '_' or '(' in key:
         continue
       d[key] = value
-      command = "%(key)s=%(value)s\nd['%(key)s']=%(key)s"%locals()
+      command = "%(key)s=%(value)d\nd['%(key)s']=%(key)s"%locals()
       command = re.sub("/\*.*?\*/", "", command)
       exec(command, locals())
 
@@ -71,6 +71,7 @@ def create_dict_of_defines(lines,file_out):
     if len(buffer) > 72:
         buffer = "      parameter(\n     & %s=%s)"%(k, d[k])
     print(buffer, file=file_out)
+
   return None
 
 def create_prototypes(lines,file_out):
@@ -138,6 +139,7 @@ def main():
   file_out.write(file_in.read().replace('\n     &',' &\n      '))
   file_in.close()
   file_out.close()
+
 
 
 if __name__ == '__main__':
