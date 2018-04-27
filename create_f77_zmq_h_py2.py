@@ -43,7 +43,9 @@ def create_dict_of_defines(lines,file_out):
     if line.startswith("#define"):
       buffer = line.split()
       key = buffer[1]
-      value = " ".join(buffer[2:])
+      value = " ".join(buffer[2:]).strip()
+      if value == "" or value.startswith("_"):
+        continue
       if key[0] == '_' or '(' in key or ',' in value:
         continue
       command = "%(key)s=%(value)s\nd['%(key)s']=%(key)s"%locals()
