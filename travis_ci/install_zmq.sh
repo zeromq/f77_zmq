@@ -30,8 +30,8 @@ tar -zxf ${ZMQ_TGZ}
 pushd ${ZMQ_TGZ%.tar.gz}
 ./configure --without-libsodium || exit 1
 make -j 8 || exit 1
-cp .libs/libzmq.a ../lib
-cp .libs/libzmq.so ../lib/libzmq.so.5
+cp src/.libs/libzmq.a ../lib
+cp src/.libs/libzmq.so ../lib/libzmq.so.5
 cp include/{zmq.h,zmq_utils.h} ../lib
 popd
 pushd lib
