@@ -13,7 +13,7 @@ export C_INCLUDE_PATH=${C_INCLUDE_PATH}:./
 
 if [[ ! -f ${ZMQ_TGZ} ]]
 then
-   wget --no-check-certificate "http://download.zeromq.org/zeromq-${VERSION}.tar.gz"
+   wget --no-check-certificate "https://github.com/zeromq/libzmq/releases/download/v${VERSION}/${ZMQ_TGZ}"
    if [[ $? -ne 0 ]]
    then
       echo "Unable to download ${ZMQ_TGZ}"
