@@ -47,6 +47,9 @@ $ export ZMQ_H=/usr/include/zmq.h
 $ make
 ```
 
+Two files will be created, one in free-format (``f77_zmq_free.h``), and one
+in fixed-format (``f77_zmq.h``).
+
 ## Differences with the C API
 
 In Fortran77 structs don't exist. They have been introduced with Fortran90.

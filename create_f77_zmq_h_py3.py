@@ -43,10 +43,11 @@ def create_dict_of_defines(lines,file_out):
     if line.startswith("#define"):
       buffer = line.split()
       key = buffer[1]
-      value = " ".join(buffer[2:]).strip()
-      if value == "" or value.startswith("_"):
+      try:
+        value = int(eval(" ".join(buffer[2:]).strip()))
+      except:
         continue
-      if key[0] == '_' or '(' in key or ',' in value:
+      if key[0] == '_' or '(' in key:
         continue
       d[key] = value
       command = "%(key)s=%(value)s\nd['%(key)s']=%(key)s"%locals()
@@ -66,7 +67,10 @@ def create_dict_of_defines(lines,file_out):
   for k in keys:
     print("      integer %s"%(k), file=file_out)
   for k in keys:
-    print("      parameter ( %-20s = %s )"%(k, d[k]), file=file_out)
+    buffer = "      parameter(%s=%s)"%(k, d[k])
+    if len(buffer) > 72:
+        buffer = "      parameter(\n     & %s=%s)"%(k, d[k])
+    print(buffer, file=file_out)
   return None
 
 def create_prototypes(lines,file_out):
@@ -127,6 +131,12 @@ def main():
 
   create_prototypes(lines,file_out)
 
+  file_out.close()
+
+  file_in  = open('f77_zmq.h','r')
+  file_out = open('f77_zmq_free.h','w')
+  file_out.write(file_in.read().replace('\n     &',' &\n      '))
+  file_in.close()
   file_out.close()
 
 
