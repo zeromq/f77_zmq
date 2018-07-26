@@ -44,7 +44,7 @@ def create_dict_of_defines(lines,file_out):
       buffer = line.split()
       key = buffer[1]
       value = " ".join(buffer[2:])
-      if key[0] == '_' or '(' in key or ',' in value:
+      if key[0] == '_' or not value or '(' in key or ',' in value or not value:
         continue
       command = "%(key)s=%(value)s\nd['%(key)s']=%(key)s"%locals()
       command = re.sub("/\*.*?\*/", "", command)
