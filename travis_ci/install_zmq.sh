@@ -3,7 +3,7 @@
 # Tests the build distribution
 
 
-VERSION=4.1.4
+VERSION=4.2.5
 ZMQ_TGZ="zeromq-${VERSION}.tar.gz"
 
 export C_INCLUDE_PATH=${C_INCLUDE_PATH}:./
@@ -13,7 +13,7 @@ export C_INCLUDE_PATH=${C_INCLUDE_PATH}:./
 
 if [[ ! -f ${ZMQ_TGZ} ]]
 then
-   wget --no-check-certificate "http://download.zeromq.org/zeromq-${VERSION}.tar.gz"
+   wget --no-check-certificate "https://github.com/zeromq/libzmq/releases/download/v${VERSION}/${ZMQ_TGZ}"
    if [[ $? -ne 0 ]]
    then
       echo "Unable to download ${ZMQ_TGZ}"
@@ -30,8 +30,8 @@ tar -zxf ${ZMQ_TGZ}
 pushd ${ZMQ_TGZ%.tar.gz}
 ./configure --without-libsodium || exit 1
 make -j 8 || exit 1
-cp .libs/libzmq.a ../lib
-cp .libs/libzmq.so ../lib/libzmq.so.5
+cp src/.libs/libzmq.a ../lib
+cp src/.libs/libzmq.so ../lib/libzmq.so.5
 cp include/{zmq.h,zmq_utils.h} ../lib
 popd
 pushd lib

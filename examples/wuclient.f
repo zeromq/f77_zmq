@@ -39,7 +39,7 @@
           total_temp = total_temp + temperature
         enddo
         print *, 'Average temperature for zipcode "'//trim(filter)//
-     &    '" was ', int(total_temp/100.), "F"
+     &    '" was ', int(real(total_temp)/100.), "F"
         rc = f77_zmq_close(subscriber)
         rc = f77_zmq_ctx_destroy(context)
 
