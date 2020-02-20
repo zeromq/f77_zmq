@@ -135,6 +135,7 @@ def main():
       sys.exit(1)
   else:
       print("Using {0}".format(ZMQ_H))
+      os.system("cp {0} .".format(ZMQ_H))
 
   file_out = open('f77_zmq.h','w')
 
