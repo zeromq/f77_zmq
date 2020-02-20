@@ -9,10 +9,10 @@ PREFIX=/usr/local/
 default: libf77zmq.so libf77zmq.a f77_zmq.h
 
 install: libf77zmq.so libf77zmq.a f77_zmq.h
-	install -m 644 libf77zmq.a $(PREFIX)/lib/ 
-	install -m 644 libf77zmq.so $(PREFIX)/lib/ 
-	install -m 644 f77_zmq.h $(PREFIX)/include/ 
-	install -m 644 f77_zmq_free.h $(PREFIX)/include/ 
+	install -D -m 644 libf77zmq.a $(PREFIX)/lib/ 
+	install -D -m 644 libf77zmq.so $(PREFIX)/lib/ 
+	install -D -m 644 f77_zmq.h $(PREFIX)/include/ 
+	install -D -m 644 f77_zmq_free.h $(PREFIX)/include/ 
 
 libf77zmq.so: f77_zmq.o
 	$(CC) -shared $^ -o $@
