@@ -1,18 +1,18 @@
 # F77\_ZMQ
 
-[![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/scemama/f77_zmq?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Build Status](https://travis-ci.org/scemama/f77_zmq.svg?branch=master)](https://travis-ci.org/scemama/f77_zmq)
 
 A Fortran 77 binding library for [ZeroMQ](http://zeromq.org)
 
-This binding works with [ZeroMQ 4.1.4](https://github.com/zeromq/zeromq4-1).
+This binding works with [ZeroMQ 4.3.1](https://github.com/zeromq/zeromq4-3).
 
 ## Usage
 
-Copy the `f77_zmq.h` and `libf77zmq.so` or `libf77zmq.a` files into
-your project.
+Copy the `f77_zmq.h` or `f77_zmq_free.h` and `libf77zmq.so` or `libf77zmq.a` files into
+your project. The `f77_zmq.h` is for fixed format and `f77_zmq_free.h` is for free format.
 
-In your Fortran source files, include the `f77_zmq.h` file. This will define all the `ZMQ_*` constants.
+In your Fortran source files, include the `f77_zmq.h` or `f77_zmq_free.h` file.
+This will define all the `ZMQ_*` constants.
 All the pointers (to sockets, messages, polling items, etc) are defined as `integer(ZMQ_PTR)`
 in order to handle 32-bit or 64-bit pointers.
 
@@ -28,17 +28,18 @@ or
 $(FC) -o $(TARGET) $(OBJ) -lzmq libf77zmq.a
 ```
 
-Be sure that `libzmq.so.4` is present in your `LD_LIBRARY_PATH` before executing the program.
+Be sure that `libzmq.so.5` is present in your `LD_LIBRARY_PATH` before executing the program.
 
 
 
 ## Installation instructions
 
 
-Python >= 2.6 is required to create the `f77_zmq.h` file.
+Python3 is required to create the `f77_zmq.h` and `f77_zmq_free.h` files.
 
-Set the `ZMQ_H` environment variable to the absolute path of the zmq.h file, and run make.
-The default compiler is gcc.
+If `zmq.h` is not in yout `CPATH`, set the `ZMQ_H` environment variable to the absolute path
+of `zmq.h`, and run `make`.
+The default compiler is `gcc`.
 
 For example:
 
@@ -47,12 +48,10 @@ $ export ZMQ_H=/usr/include/zmq.h
 $ make
 ```
 
-Two files will be created, one in free-format (``f77_zmq_free.h``), and one
-in fixed-format (``f77_zmq.h``).
 
 ## Differences with the C API
 
-In Fortran77 structs don't exist. They have been introduced with Fortran90.
+In Fortran77 structs don't exist: they have been introduced with Fortran90.
 To maintain F77 compatibility, the structs are created using C functions
 and their pointers are passed to the Fortran. This implies the addition
 of a few functions.
@@ -99,6 +98,12 @@ of a few functions.
 
   + `integer(ZMQ_PTR) item` : poll item struct
 
+### Improvements
 
+This interface is quite old. Now, Fortran has introduced the `iso_c_bindings`
+module which allows to call C functions in a standard and portable way.  This
+interface should be rewritten using `iso_c_bindings` to be more portable.  I
+don't have time to do it myself, but if somebody wants to start this project I
+will be happy to help.
 
 
