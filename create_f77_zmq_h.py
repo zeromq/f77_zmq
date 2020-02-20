@@ -111,18 +111,18 @@ def create_prototypes(lines,file_out):
 
 
 def find_ZMQ_H():
-    if "ZMQ_H" is os.environ:
+    if "ZMQ_H" is os.environ.keys():
         return os.environ["ZMQ_H"]
     else:
-        if "CPATH" in os.environ:
+        if "CPATH" in os.environ.keys():
             dirs = os.environ["CPATH"].split(':')
         elif "C_INCLUDE_PATH" in os.environ:
             dirs = os.environ["C_INCLUDE_PATH"].split(':')
         else:
-            dirs = [ "/usr/include", "/usr/local/include" ]
-        for dir in dirs:
-            if "zmq.h" in os.listdir(dir):
-                return ("{0}/zmq.h".format(dir))
+            dirs = ["/usr/include", "/usr/local/include"]
+        for d in dirs:
+            if d and "zmq.h" in os.listdir(d):
+                return ("{0}/zmq.h".format(d))
         return None
 
 def main():
