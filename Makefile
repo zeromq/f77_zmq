@@ -14,12 +14,6 @@ install: libf77zmq.so libf77zmq.a f77_zmq.h
 	install -m 644 f77_zmq.h $(PREFIX)/include/ 
 	install -m 644 f77_zmq_free.h $(PREFIX)/include/ 
 
-$(ZMQ_H):
-	$(error $(ZMQ_H) : file not found)
-
-zmq.h: $(ZMQ_H)
-	cp $(ZMQ_H) zmq.h
-
 libf77zmq.so: f77_zmq.o
 	$(CC) -shared $^ -o $@
 
@@ -29,7 +23,7 @@ libf77zmq.a: f77_zmq.o
 f77_zmq.o: f77_zmq.c f77_zmq.h
 	$(CC) $(CFLAGS) -c f77_zmq.c -o $@
 
-f77_zmq.h: create_f77_zmq_h.py zmq.h f77_zmq.c
+f77_zmq.h: create_f77_zmq_h.py f77_zmq.c
 	python3 create_f77_zmq_h.py 
 
 clean:
