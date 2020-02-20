@@ -114,7 +114,13 @@ def find_ZMQ_H():
     if "ZMQ_H" is os.environ:
         return os.environ["ZMQ_H"]
     else:
-        for dir in os.environ["CPATH"].split(':'):
+        if "CPATH" in os.environ:
+            dirs = os.environ["CPATH"].split(':')
+        elif "C_INCLUDE_PATH" in os.environ:
+            dirs = os.environ["C_INCLUDE_PATH"].split(':')
+        else:
+            dirs = [ "/usr/include", "/usr/local/include" ]
+        for dir in dirs:
             if "zmq.h" in os.listdir(dir):
                 return ("{0}/zmq.h".format(dir))
         return None
