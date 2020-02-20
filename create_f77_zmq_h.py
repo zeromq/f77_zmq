@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 #
 #    f77_zmq : Fortran 77 bindings for the ZeroMQ library
 #    Copyright (C) 2014 Anthony Scemama
@@ -24,11 +24,15 @@
 # Universite Paul Sabatier - Bat. 3R1b4, 118 route de Narbonne
 # 31062 Toulouse Cedex 09, France
 
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
 
 import re
 import os
 import sys
 import ctypes
+
 
 def create_lines(f):
   result = f.read()
@@ -121,7 +125,7 @@ def find_ZMQ_H():
             v = os.environ.get("C_INCLUDE_PATH")
         if v is None:
             v = "/usr/include:/usr/local/include"
-            
+
         for d in v.split(':'):
             if d and "zmq.h" in os.listdir(d):
                 return ("{0}/zmq.h".format(d))
