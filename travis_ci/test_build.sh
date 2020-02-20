@@ -5,7 +5,6 @@
 export C_INCLUDE_PATH=${C_INCLUDE_PATH}:./
 
 pushd lib
-ln -s libzmq.so.5 libzmq.so
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$PWD
 export LIBRARY_PATH=$LIBRARY_PATH:$PWD
 export ZMQ_H=$PWD/zmq.h

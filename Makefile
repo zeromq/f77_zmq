@@ -1,16 +1,18 @@
 # ZeroMQ header file
 
-ifndef ZMQ_H
-$(error Please set the ZMQ_H environment variable to the full path of zmq.h)
-endif
-
 CC=gcc -fPIC 
-CFLAGS=-O3 -fPIC -Wall -pedantic -g
-#CFLAGS=-O3 -fPIC -g
+CFLAGS=-O3 -Wall -pedantic -g
+PREFIX=/usr/local/
 
 .PHONY: default
 
 default: libf77zmq.so libf77zmq.a f77_zmq.h
+
+install: libf77zmq.so libf77zmq.a f77_zmq.h
+	install -m 644 libf77zmq.a $(PREFIX)/lib/ 
+	install -m 644 libf77zmq.so $(PREFIX)/lib/ 
+	install -m 644 f77_zmq.h $(PREFIX)/include/ 
+	install -m 644 f77_zmq_free.h $(PREFIX)/include/ 
 
 $(ZMQ_H):
 	$(error $(ZMQ_H) : file not found)
@@ -28,7 +30,7 @@ f77_zmq.o: f77_zmq.c f77_zmq.h
 	$(CC) $(CFLAGS) -c f77_zmq.c -o $@
 
 f77_zmq.h: create_f77_zmq_h.py zmq.h f77_zmq.c
-	python create_f77_zmq_h.py zmq.h
+	python3 create_f77_zmq_h.py 
 
 clean:
 	$(RM) -f -- f77_zmq.o f77_zmq.h
