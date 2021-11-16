@@ -5,7 +5,7 @@ AC_PREREQ([2.69])
 AC_INIT([f77-zmq], [4.3.1], [https://github.com/zeromq/f77_zmq/issues])
 AC_CONFIG_AUX_DIR([build-config])
 AC_CONFIG_MACRO_DIRS([build-config/m4])
-AM_INIT_AUTOMAKE([silent-rules foreign])
+AM_INIT_AUTOMAKE([silent-rules foreign subdir-objects])
 
 AC_CONFIG_SRCDIR([f77_zmq.c])
 AC_CONFIG_HEADERS([build-config/config.h])
@@ -14,7 +14,7 @@ LT_INIT
 
 # Checks for programs.
 AC_PROG_CC
-AC_PROG_FC
+AC_PROG_F77
 AC_PROG_INSTALL
 AC_PROG_LN_S
 AC_PROG_MAKE_SET

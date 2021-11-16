@@ -1,27 +1,25 @@
-      module ctx
-        include 'f77_zmq.h'
-        integer(ZMQ_PTR)      context
-      end module
-
       subroutine task_worker
 !       Task worker
 !       Connects PULL socket to inproc://5557
 !       Collects workloads from ventilator via that socket
 !       Connects PUSH socket to inproc://5558
 !       Sends results to sink via that socket
-        use ctx
         implicit none
+        include 'f77_zmq.h'
 
         integer               rc
         integer               msecs
         character*(20)        string
 
         integer(ZMQ_PTR)      sender, receiver, sink
+
+        integer(ZMQ_PTR) context
+        common /ctx/ context
         ! Socket to receive messages on
         receiver = f77_zmq_socket(context,ZMQ_PULL)
         rc = f77_zmq_connect (receiver, "inproc://5557")
         if (rc /= 0) stop '1st Connect failed'
-       
+
         ! Socket to send messages to
         sender = f77_zmq_socket (context, ZMQ_PUSH);
         rc = f77_zmq_connect (sender, "inproc://5558");
@@ -60,8 +58,8 @@
 !       Task ventilator
 !       Binds PUSH socket to inproc://5557
 !       Sends batch of tasks to workers via that socket
-        use ctx
         implicit none
+        include 'f77_zmq.h'
 
         integer(ZMQ_PTR)      sender, sink
         integer               rc
@@ -70,6 +68,9 @@
         integer               workload
         double precision      r
         character*(10)        string
+
+        integer(ZMQ_PTR) context
+        common /ctx/ context
 
         sender  = f77_zmq_socket(context,ZMQ_PUSH)
         rc = f77_zmq_bind (sender, "inproc://5557")
@@ -100,18 +101,21 @@
           rc = f77_zmq_send(sender,'-1',2,0)
         enddo
         print *, 'Total expected cost: ',total_msec,' msec'
-       
+
         rc = f77_zmq_close (sink)
         rc = f77_zmq_close (sender)
       end
 
 
       program main
-        use ctx
         implicit none
+        include 'f77_zmq.h'
         external :: task_worker, task_ventilator
         integer(ZMQ_PTR) :: thread(5)
         integer :: i, rc
+
+        integer(ZMQ_PTR) context
+        common /ctx/ context
 
         context  = f77_zmq_ctx_new()
         rc = pthread_create ( thread(5), task_ventilator )
