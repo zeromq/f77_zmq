@@ -41,6 +41,8 @@ AC_TYPE_SIZE_T
 # Checks for library functions.
 AC_FUNC_MALLOC
 
+AC_F77_WRAPPERS
+
 AC_LANG([C])
 
 AC_CONFIG_FILES([Makefile])

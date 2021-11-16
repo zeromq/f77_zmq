@@ -101,7 +101,7 @@ def create_prototypes(lines,file_out):
     typ = typ_conv[buffer[0]]
     if typ is None:
       continue
-    name = buffer[1][:-1]
+    name = buffer[1][:-1].split("(")[1]
     d[name] = typ
 
   # Print to file

@@ -1,5 +1,5 @@
   /*
-    f77_zmq : Fortran 77 bindings for the ZeroMQ library
+    F77_FUNC(f77_zm, F77_ZM)  : Fortran 77 bindings for the ZeroMQ library
     Copyright (C) 2014 Anthony Scemama 
     
 
@@ -24,6 +24,7 @@
   31062 Toulouse Cedex 09, France
   */
 
+#include "config.h"
 #include "zmq.h"
 #include <stdlib.h>
 #include <memory.h>
@@ -33,7 +34,7 @@
 /* Guidelines
  * ==========
  *
- * + Fortran-callable function names should start with f77_zmq_ and should end with an underscore.
+ * + Fortran-callable function names should start with f77_zmq_ and should be built with the F77_FUNC macro.
  * + A space should be present between the the name of the function and the '(' character for the
  *   python script to work properly.
  * + void* return types will be translated to INTEGER(ZMQ_PTR)
@@ -44,23 +45,23 @@
 /* Helper functions *
   ================ */
 
-int f77_zmq_errno_ (void)
+int F77_FUNC(f77_zmq_errno, F77_ZMQ_ERRNO)  (void)
 {
   return zmq_errno ();
 }
 
-char* f77_zmq_strerror_ (int *errnum)
+char* F77_FUNC(f77_zmq_strerror, F77_ZMQ_STRERROR)  (int *errnum)
 {
   return (char*) zmq_strerror (*errnum);
 }
 
-int f77_zmq_version_ (int *major, int *minor, int *patch)
+int F77_FUNC(f77_zmq_version, F77_ZMQ_VERSION)  (int *major, int *minor, int *patch)
 {
   zmq_version (major, minor, patch);
   return 0;
 }
 
-int f77_zmq_microsleep_ (int* microsecs)
+int F77_FUNC(f77_zmq_microsleep, F77_ZMQ_MICROSLEEP)  (int* microsecs)
 {
   struct timespec ts, ts2;
   ts.tv_sec  = 0;
@@ -71,38 +72,38 @@ int f77_zmq_microsleep_ (int* microsecs)
 /* Context *
  * ======= */
 
-void* f77_zmq_ctx_new_ ()
+void* F77_FUNC(f77_zmq_ctx_new, F77_ZMQ_CTX_NEW)  ()
 {
     return zmq_ctx_new ();
 }
 
-int f77_zmq_ctx_term_ (void* *context)
+int F77_FUNC(f77_zmq_ctx_term, F77_ZMQ_CTX_TERM)  (void* *context)
 {
     return zmq_ctx_term (*context);
 }
 
-int f77_zmq_ctx_shutdown_ (void* *context)
+int F77_FUNC(f77_zmq_ctx_shutdown, F77_ZMQ_CTX_SHUTDOWN)  (void* *context)
 {
     return zmq_ctx_shutdown (*context);
 }
 
-int f77_zmq_ctx_get_ (void* *context, int* option_name)
+int F77_FUNC(f77_zmq_ctx_get, F77_ZMQ_CTX_GET)  (void* *context, int* option_name)
 {
   return zmq_ctx_get (*context, *option_name );
 }
 
-int f77_zmq_ctx_set_ (void* *context, int* option_name, int* option_value)
+int F77_FUNC(f77_zmq_ctx_set, F77_ZMQ_CTX_SET)  (void* *context, int* option_name, int* option_value)
 {
   return zmq_ctx_set (*context, *option_name, *option_value);
 }
 
 /* Old (legacy) API */
-int f77_zmq_term_ (void* *context)
+int F77_FUNC(f77_zmq_term, F77_ZMQ_TERM)  (void* *context)
 {
     return zmq_term (*context);
 }
 
-int f77_zmq_ctx_destroy_ (void* *context)
+int F77_FUNC(f77_zmq_ctx_destroy, F77_ZMQ_CTX_DESTROY)  (void* *context)
 {
     return zmq_ctx_destroy (*context);
 }
@@ -111,17 +112,17 @@ int f77_zmq_ctx_destroy_ (void* *context)
 /* Sockets *
  * ======= */
 
-void* f77_zmq_socket_ (void* *context, int* type)
+void* F77_FUNC(f77_zmq_socket, F77_ZMQ_SOCKET)  (void* *context, int* type)
 {
     return zmq_socket (*context, *type);
 }
 
-int f77_zmq_close_ (void* *socket)
+int F77_FUNC(f77_zmq_close, F77_ZMQ_CLOSE)  (void* *socket)
 {
     return zmq_close(*socket);
 }
 
-int f77_zmq_bind_ (void* *socket, char* address_in, int address_len)
+int F77_FUNC(f77_zmq_bind, F77_ZMQ_BIND)  (void* *socket, char* address_in, int address_len)
 {
   char* address = malloc((address_len+1) * sizeof(*address) );
   int rc;
@@ -142,7 +143,7 @@ int f77_zmq_bind_ (void* *socket, char* address_in, int address_len)
 }
 
 
-int f77_zmq_unbind_ (void* *socket, char* address_in, int address_len)
+int F77_FUNC(f77_zmq_unbind, F77_ZMQ_UNBIND)  (void* *socket, char* address_in, int address_len)
 {
   char* address = malloc((address_len+1) * sizeof(*address) );
   int rc;
@@ -164,7 +165,7 @@ int f77_zmq_unbind_ (void* *socket, char* address_in, int address_len)
 
 
 
-int f77_zmq_connect_ (void* *socket, char* address_in, int address_len)
+int F77_FUNC(f77_zmq_connect, F77_ZMQ_CONNECT)  (void* *socket, char* address_in, int address_len)
 {
   char* address = malloc((address_len+1) * sizeof(*address) );
   int rc;
@@ -185,7 +186,7 @@ int f77_zmq_connect_ (void* *socket, char* address_in, int address_len)
 }
 
 
-int f77_zmq_disconnect_ (void* *socket, char* address_in, int address_len)
+int F77_FUNC(f77_zmq_disconnect, F77_ZMQ_DISCONNECT)  (void* *socket, char* address_in, int address_len)
 {
   char* address = malloc((address_len+1) * sizeof(*address) );
   int rc;
@@ -205,7 +206,7 @@ int f77_zmq_disconnect_ (void* *socket, char* address_in, int address_len)
   return rc;
 }
 
-int f77_zmq_setsockopt_ (void* *socket, int* option_name, void* option_value, int* option_len, int dummy)
+int F77_FUNC(f77_zmq_setsockopt, F77_ZMQ_SETSOCKOPT)  (void* *socket, int* option_name, void* option_value, int* option_len, int dummy)
 {
   int result;
   void * value = malloc(*option_len);
@@ -215,14 +216,14 @@ int f77_zmq_setsockopt_ (void* *socket, int* option_name, void* option_value, in
   return result;
 }
 
-int f77_zmq_getsockopt_ (void* *socket, int* option_name, void *option_value, int *option_len, int dummy)
+int F77_FUNC(f77_zmq_getsockopt, F77_ZMQ_GETSOCKOPT)  (void* *socket, int* option_name, void *option_value, int *option_len, int dummy)
 {
   size_t option_len_st = (size_t) *option_len;
   return zmq_getsockopt (*socket, *option_name, option_value, &option_len_st);
   *option_len = option_len_st;
 }
 
-int f77_zmq_socket_monitor_ (void* *socket, char* address_in, int* events, int address_len)
+int F77_FUNC(f77_zmq_socket_monitor, F77_ZMQ_SOCKET_MONITOR)  (void* *socket, char* address_in, int* events, int address_len)
 {
   char* address = malloc((address_len+1) * sizeof(*address) );
   int rc;
@@ -245,33 +246,33 @@ int f77_zmq_socket_monitor_ (void* *socket, char* address_in, int* events, int a
 /* Send/Recv *
  * ========= */
 
-int f77_zmq_send_ (void* *socket, void* message, int* message_len, int* flags, int dummy)
+int F77_FUNC(f77_zmq_send, F77_ZMQ_SEND)  (void* *socket, void* message, int* message_len, int* flags, int dummy)
 {
   return (int) zmq_send (*socket, message, (size_t) *message_len, *flags);
 }
 
-int f77_zmq_send_const_ (void* *socket, void* message, int* message_len, int* flags, int dummy)
+int F77_FUNC(f77_zmq_send_const, F77_ZMQ_SEND_CONST)  (void* *socket, void* message, int* message_len, int* flags, int dummy)
 {
   return (int) zmq_send_const (*socket, message, (size_t) *message_len, *flags);
 }
 
-int f77_zmq_recv_ (void* *socket, void* message, int* message_len, int* flags, int dummy)
+int F77_FUNC(f77_zmq_recv, F77_ZMQ_RECV)  (void* *socket, void* message, int* message_len, int* flags, int dummy)
 {
   return (int) zmq_recv (*socket, message, (size_t) *message_len, *flags);
 }
 
 
-long f77_zmq_send8_ (void* *socket, void* message, long* message_len, int* flags, int dummy)
+long F77_FUNC(f77_zmq_send8, F77_ZMQ_SEND8)  (void* *socket, void* message, long* message_len, int* flags, int dummy)
 {
   return (long) zmq_send (*socket, message, (size_t) *message_len, *flags);
 }
 
-long f77_zmq_send_const8_ (void* *socket, void* message, long* message_len, int* flags, int dummy)
+long F77_FUNC(f77_zmq_send_const8, F77_ZMQ_SEND_CONST8)  (void* *socket, void* message, long* message_len, int* flags, int dummy)
 {
   return (long) zmq_send_const (*socket, message, (size_t) *message_len, *flags);
 }
 
-long f77_zmq_recv8_ (void* *socket, void* message, long* message_len, int* flags, int dummy)
+long F77_FUNC(f77_zmq_recv8, F77_ZMQ_RECV8)  (void* *socket, void* message, long* message_len, int* flags, int dummy)
 {
   return (long) zmq_recv (*socket, message, (size_t) *message_len, *flags);
 }
@@ -281,12 +282,12 @@ long f77_zmq_recv8_ (void* *socket, void* message, long* message_len, int* flags
 /* Messages *
  * ======== */
 
-void* f77_zmq_msg_new_ ()
+void* F77_FUNC(f77_zmq_msg_new, F77_ZMQ_MSG_NEW)  ()
 {
   return malloc (sizeof(zmq_msg_t));
 }
 
-int f77_zmq_msg_destroy_ (zmq_msg_t* *msg)
+int F77_FUNC(f77_zmq_msg_destroy, F77_ZMQ_MSG_DESTROY)  (zmq_msg_t* *msg)
 {
   if (*msg != NULL)
   {
@@ -295,7 +296,7 @@ int f77_zmq_msg_destroy_ (zmq_msg_t* *msg)
   return 0;
 }
 
-void* f77_zmq_msg_data_new_ (int* size_in, void* buffer, int* size_buffer, int dummy)
+void* F77_FUNC(f77_zmq_msg_data_new, F77_ZMQ_MSG_DATA_NEW)  (int* size_in, void* buffer, int* size_buffer, int dummy)
 {
   void* data = malloc(*size_in * sizeof(char));
   if (*size_buffer > 0)
@@ -303,7 +304,7 @@ void* f77_zmq_msg_data_new_ (int* size_in, void* buffer, int* size_buffer, int d
   return data;
 }
 
-int f77_zmq_msg_destroy_data_ (void* *data)
+int F77_FUNC(f77_zmq_msg_destroy_data, F77_ZMQ_MSG_DESTROY_DATA)  (void* *data)
 {
   if (*data != NULL)
   {
@@ -314,19 +315,19 @@ int f77_zmq_msg_destroy_data_ (void* *data)
 }
 
 
-int f77_zmq_msg_init_ (zmq_msg_t* *msg)
+int F77_FUNC(f77_zmq_msg_init, F77_ZMQ_MSG_INIT)  (zmq_msg_t* *msg)
 {
   return zmq_msg_init (*msg);
 }
 
 
-int f77_zmq_msg_close_ (zmq_msg_t* *msg)
+int F77_FUNC(f77_zmq_msg_close, F77_ZMQ_MSG_CLOSE)  (zmq_msg_t* *msg)
 {
   return zmq_msg_close (*msg);
 }
 
 
-int f77_zmq_msg_init_size_ (zmq_msg_t* *msg, int* size_in)
+int F77_FUNC(f77_zmq_msg_init_size, F77_ZMQ_MSG_INIT_SIZE)  (zmq_msg_t* *msg, int* size_in)
 {
   size_t size = (size_t) *size_in;
   return zmq_msg_init_size (*msg, size);
@@ -338,56 +339,56 @@ void ffn(void* data, void* hint)
      free(data);
 }
 
-int f77_zmq_msg_init_data_ (zmq_msg_t* *msg, void* *data, int* size_in)
+int F77_FUNC(f77_zmq_msg_init_data, F77_ZMQ_MSG_INIT_DATA)  (zmq_msg_t* *msg, void* *data, int* size_in)
 {
   size_t size = (size_t) *size_in;
   return zmq_msg_init_data (*msg, *data, size, &ffn, NULL);
 }
 
 
-int f77_zmq_msg_send_ (zmq_msg_t* *msg, void* *socket, int* flags)
+int F77_FUNC(f77_zmq_msg_send, F77_ZMQ_MSG_SEND)  (zmq_msg_t* *msg, void* *socket, int* flags)
 {
    return (int) zmq_msg_send (*msg, *socket, *flags);
 }
 
 
-long f77_zmq_msg_send8_ (zmq_msg_t* *msg, void* *socket, int* flags)
+long F77_FUNC(f77_zmq_msg_send8, F77_ZMQ_MSG_SEND8)  (zmq_msg_t* *msg, void* *socket, int* flags)
 {
    return (long) zmq_msg_send (*msg, *socket, *flags);
 }
 
 
-int f77_zmq_msg_recv_ (zmq_msg_t* *msg, void* *socket, int* flags)
+int F77_FUNC(f77_zmq_msg_recv, F77_ZMQ_MSG_RECV)  (zmq_msg_t* *msg, void* *socket, int* flags)
 {
    return (int) zmq_msg_recv (*msg, *socket, *flags);
 }
 
-long f77_zmq_msg_recv8_ (zmq_msg_t* *msg, void* *socket, int* flags)
+long F77_FUNC(f77_zmq_msg_recv8, F77_ZMQ_MSG_RECV8)  (zmq_msg_t* *msg, void* *socket, int* flags)
 {
    return (long) zmq_msg_recv (*msg, *socket, *flags);
 }
 
  
-void* f77_zmq_msg_data_ (zmq_msg_t* *msg)
+void* F77_FUNC(f77_zmq_msg_data, F77_ZMQ_MSG_DATA)  (zmq_msg_t* *msg)
 {
   return zmq_msg_data(*msg);
 }
 
 
-int f77_zmq_msg_size_ (zmq_msg_t* *msg)
+int F77_FUNC(f77_zmq_msg_size, F77_ZMQ_MSG_SIZE)  (zmq_msg_t* *msg)
 {
   const size_t rc = zmq_msg_size (*msg);
   return (int) rc;
 }
 
-long f77_zmq_msg_size8_ (zmq_msg_t* *msg)
+long F77_FUNC(f77_zmq_msg_size8, F77_ZMQ_MSG_SIZE8)  (zmq_msg_t* *msg)
 {
   const size_t rc = zmq_msg_size (*msg);
   return (long) rc;
 }
 
 
-int f77_zmq_msg_copy_from_data_ (zmq_msg_t* *msg, void* buffer, int dummy)
+int F77_FUNC(f77_zmq_msg_copy_from_data, F77_ZMQ_MSG_COPY_FROM_DATA)  (zmq_msg_t* *msg, void* buffer, int dummy)
 {
   const size_t sze = zmq_msg_size (*msg);
   void* data = zmq_msg_data (*msg);
@@ -395,7 +396,7 @@ int f77_zmq_msg_copy_from_data_ (zmq_msg_t* *msg, void* buffer, int dummy)
   return (int) sze;
 }
 
-int f77_zmq_msg_copy_to_data_ (zmq_msg_t* *msg, void* buffer, int* size_in, int dummy)
+int F77_FUNC(f77_zmq_msg_copy_to_data, F77_ZMQ_MSG_COPY_TO_DATA)  (zmq_msg_t* *msg, void* buffer, int* size_in, int dummy)
 {
   const size_t size = (size_t) *size_in;
   void* data = zmq_msg_data (*msg);
@@ -403,7 +404,7 @@ int f77_zmq_msg_copy_to_data_ (zmq_msg_t* *msg, void* buffer, int* size_in, int 
   return 0;
 }
 
-int f77_zmq_msg_copy_to_data8_ (zmq_msg_t* *msg, void* buffer, long* size_in, int dummy)
+int F77_FUNC(f77_zmq_msg_copy_to_data8, F77_ZMQ_MSG_COPY_TO_DATA8)  (zmq_msg_t* *msg, void* buffer, long* size_in, int dummy)
 {
   const size_t size = (size_t) *size_in;
   void* data = zmq_msg_data (*msg);
@@ -411,19 +412,19 @@ int f77_zmq_msg_copy_to_data8_ (zmq_msg_t* *msg, void* buffer, long* size_in, in
   return 0;
 }
 
-int f77_zmq_msg_more_ (zmq_msg_t* *message)
+int F77_FUNC(f77_zmq_msg_more, F77_ZMQ_MSG_MORE)  (zmq_msg_t* *message)
 {
   return zmq_msg_more (*message);
 }
 
 
-int f77_zmq_msg_get_ (zmq_msg_t* *message, int *property)
+int F77_FUNC(f77_zmq_msg_get, F77_ZMQ_MSG_GET)  (zmq_msg_t* *message, int *property)
 {
   return zmq_msg_get (*message, *property);
 }
 
 
-char* f77_zmq_msg_gets_ (zmq_msg_t* *message, char* property_in, int property_len)
+char* F77_FUNC(f77_zmq_msg_gets, F77_ZMQ_MSG_GETS)  (zmq_msg_t* *message, char* property_in, int property_len)
 {
   const char* rc;
   char* property = malloc((property_len+1) * sizeof(*property) );
@@ -444,19 +445,19 @@ char* f77_zmq_msg_gets_ (zmq_msg_t* *message, char* property_in, int property_le
 }
 
 
-int f77_zmq_msg_set_ (zmq_msg_t* *message, int *property, int *value)
+int F77_FUNC(f77_zmq_msg_set, F77_ZMQ_MSG_SET)  (zmq_msg_t* *message, int *property, int *value)
 {
   return zmq_msg_set (*message, *property, *value);
 }
 
 
-int f77_zmq_msg_copy_ (zmq_msg_t* *dest, zmq_msg_t* *src)
+int F77_FUNC(f77_zmq_msg_copy, F77_ZMQ_MSG_COPY)  (zmq_msg_t* *dest, zmq_msg_t* *src)
 {
   return zmq_msg_copy (*dest, *src);
 }
 
 
-int f77_zmq_msg_move_ (zmq_msg_t* *dest, zmq_msg_t* *src)
+int F77_FUNC(f77_zmq_msg_move, F77_ZMQ_MSG_MOVE)  (zmq_msg_t* *dest, zmq_msg_t* *src)
 {
   return zmq_msg_move (*dest, *src);
 }
@@ -467,20 +468,20 @@ int f77_zmq_msg_move_ (zmq_msg_t* *dest, zmq_msg_t* *src)
 /* Polling *
  * ======= */
 
-int f77_zmq_poll_ (zmq_pollitem_t* *items, int *nitems, int *timeout)
+int F77_FUNC(f77_zmq_poll, F77_ZMQ_POLL)  (zmq_pollitem_t* *items, int *nitems, int *timeout)
 {
   return zmq_poll (*items, *nitems, (long) *timeout);
 }
 
 
-void* f77_zmq_pollitem_new_ (int* nitems)
+void* F77_FUNC(f77_zmq_pollitem_new, F77_ZMQ_POLLITEM_NEW)  (int* nitems)
 {
   zmq_pollitem_t *result = malloc (*nitems * sizeof(*result));
   return (void*) result;
 }
 
 
-int f77_zmq_pollitem_destroy_ (zmq_pollitem_t* *item)
+int F77_FUNC(f77_zmq_pollitem_destroy, F77_ZMQ_POLLITEM_DESTROY)  (zmq_pollitem_t* *item)
 {
   if (item != NULL)
   {
@@ -489,29 +490,29 @@ int f77_zmq_pollitem_destroy_ (zmq_pollitem_t* *item)
   return 0;
 }
 
-int f77_zmq_pollitem_set_socket_ (zmq_pollitem_t* *pollitem, int* i, void* *socket)
+int F77_FUNC(f77_zmq_pollitem_set_socket, F77_ZMQ_POLLITEM_SET_SOCKET)  (zmq_pollitem_t* *pollitem, int* i, void* *socket)
 {
   (*pollitem)[(*i)-1].socket = *socket;
   return 0;
 }
 
-int f77_zmq_pollitem_set_events_ (zmq_pollitem_t* *pollitem, int* i, int* events)
+int F77_FUNC(f77_zmq_pollitem_set_events, F77_ZMQ_POLLITEM_SET_EVENTS)  (zmq_pollitem_t* *pollitem, int* i, int* events)
 {
   (*pollitem)[(*i)-1].events = (short) *events;
   return 0;
 }
 
-int f77_zmq_pollitem_revents_ (zmq_pollitem_t* *pollitem, int* i)
+int F77_FUNC(f77_zmq_pollitem_revents, F77_ZMQ_POLLITEM_REVENTS)  (zmq_pollitem_t* *pollitem, int* i)
 {
   return (int) (*pollitem)[(*i)-1].revents;
 }
 
-int f77_zmq_proxy_ (void* *frontend, void* *backend, void* *capture)
+int F77_FUNC(f77_zmq_proxy, F77_ZMQ_PROXY)  (void* *frontend, void* *backend, void* *capture)
 {
   return zmq_proxy(*frontend, *backend, *capture);
 }
 
-int f77_zmq_proxy_steerable_ (void* *frontend, void* *backend, void* *capture,
+int F77_FUNC(f77_zmq_proxy_steerable, F77_ZMQ_PROXY_STEERABLE)  (void* *frontend, void* *backend, void* *capture,
     void* *control)
 {
   return zmq_proxy_steerable(*frontend, *backend, *capture, *control);
@@ -525,7 +526,7 @@ int f77_zmq_proxy_steerable_ (void* *frontend, void* *backend, void* *capture,
 
 #include <pthread.h>
 
-int pthread_create_ (void* *newthread, void* subroutine (void *))
+int F77_FUNC(pthread_create, PTHREAD_CREATE)  (void* *newthread, void* subroutine (void *))
 {
   int rc;
   *newthread = malloc (sizeof(pthread_t));
@@ -533,7 +534,7 @@ int pthread_create_ (void* *newthread, void* subroutine (void *))
   return rc;
 }
 
-int pthread_create_arg_ (void* *newthread, void* subroutine (void *), void* arg)
+int F77_FUNC(pthread_create_arg, PTHREAD_CREATE_ARG)  (void* *newthread, void* subroutine (void *), void* arg)
 {
   int rc;
   *newthread = malloc (sizeof(pthread_t));
@@ -541,7 +542,7 @@ int pthread_create_arg_ (void* *newthread, void* subroutine (void *), void* arg)
   return rc;
 }
 
-int pthread_join_ (void* *thread)
+int F77_FUNC(pthread_join, PTHREAD_JOIN)  (void* *thread)
 {
   int rc;
   pthread_t* thread_pointer = (pthread_t*) *thread;
@@ -552,7 +553,7 @@ int pthread_join_ (void* *thread)
 }
 
 
-int pthread_detach_ (void* *thread)
+int F77_FUNC(pthread_detach, PTHREAD_DETACH)  (void* *thread)
 {
   int rc;
   pthread_t* thread_pointer = (pthread_t*) *thread;
