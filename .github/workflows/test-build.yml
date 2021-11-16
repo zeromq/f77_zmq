@@ -16,7 +16,7 @@ jobs:
     - uses: actions/checkout@v2
 
     - name: Install zeromq
-      run: sudo apt-get install libzmq5
+      run: sudo apt-get install libzmq3-dev
 
     - name: Build
       run: |

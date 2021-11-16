@@ -60,8 +60,13 @@ AC_DEFUN([AX_ZMQ], [
 #endif
             ],[
                 AC_MSG_RESULT(yes)
-                HAVE_ZMQ=1
-                ZMQ_LIBS="-lzmq"
+                AC_CHECK_LIB([zmq],[zmq_send],[
+                    HAVE_ZMQ=1
+                    ZMQ_LIBS="-lzmq"
+                  ],[
+                    AC_MSG_ERROR([libzmq.so not in LIBRARY_PATH])
+                  ])
+                         
                 AC_SUBST(ZMQ_LDFLAGS)
                 AC_SUBST(ZMQ_CPPFLAGS)
                 AC_SUBST(ZMQ_LIBS)
