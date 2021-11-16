@@ -149,7 +149,7 @@ def main():
 
   create_dict_of_defines(lines,file_out)
 
-  file_in = open( 'f77_zmq.c', 'r' )
+  file_in = open(sys.argv[1], 'r' )
   lines = create_lines(file_in)
   file_in.close()
 

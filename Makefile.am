@@ -27,7 +27,9 @@ example_DATA = \
 
 CLEANFILES = $(include_HEADERS)
 
-f77_zmq.h: 
-	$(PYTHON) create_f77_zmq_h.py
+MISSING=$(srcdir)/build-config/missing
+
+f77_zmq.h: f77_zmq.c
+	$(MISSING) python $(srcdir)/create_f77_zmq_h.py $(srcdir)/f77_zmq.c
 
 f77_zmq_free.h: f77_zmq.h

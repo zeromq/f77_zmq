@@ -18,10 +18,6 @@ AC_PROG_FC
 AC_PROG_INSTALL
 AC_PROG_LN_S
 AC_PROG_MAKE_SET
-AC_PATH_PROG([PYTHON], [python3 python], [nocommand])
-AS_IF([test "x$PYTHON" = xnocommand], [
-        AC_MSG_ERROR([Python not found in $PATH]) ])
-
 
 
 # Checks for libraries.
