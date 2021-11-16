@@ -6,24 +6,22 @@
         character*(64)          address
         character(len=:), allocatable :: buffer
         integer                 rc
-       
-       
+
+
         allocate (character(len=20) :: buffer)
         address = 'tcp://*:5555'
-       
+
         context   = f77_zmq_ctx_new()
         responder = f77_zmq_socket(context, ZMQ_REP)
         rc        = f77_zmq_bind(responder,address)
-       
-        print *,  rc
+
         do
-          print *,  "rc = f77_zmq_recv(responder, buffer, 20, 0)"
           rc = f77_zmq_recv(responder, buffer, 20, 0)
-          print *,  'Received :', buffer(1:rc)
+          print '(A20,A20)',  'Received :', buffer(1:rc)
           if (buffer(1:rc) /= 'end') then
-            rc = f77_zmq_send (responder, "world", 5, 0)
+            rc = f77_zmq_send (responder, 'world', 5, 0)
           else
-            rc = f77_zmq_send (responder, "end", 3, 0)
+            rc = f77_zmq_send (responder, 'end', 3, 0)
             exit
           endif
         enddo

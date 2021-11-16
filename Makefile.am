@@ -8,7 +8,7 @@ CLEANFILES = $(include_HEADERS)
 
 MISSING=$(srcdir)/build-config/missing
 
-f77_zmq.h: f77_zmq.c
+f77_zmq.h: f77_zmq.c $(srcdir)/create_f77_zmq_h.py
 	$(MISSING) python $(srcdir)/create_f77_zmq_h.py $(srcdir)/f77_zmq.c
 
 f77_zmq_free.h: f77_zmq.h
@@ -61,6 +61,7 @@ check_PROGRAMS =                 \
     examples/vent_thread
 
 EXTRA_DIST =                     \
+    create_f77_zmq_h.py          \
     examples/hw_msg.sh           \
     examples/hw.sh               \
     examples/python_server.py    \

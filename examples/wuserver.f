@@ -11,10 +11,10 @@
         
         context = f77_zmq_ctx_new()
         publisher = f77_zmq_socket (context, ZMQ_PUB)
-        rc = f77_zmq_bind (publisher, "tcp://*:5556")
+        rc = f77_zmq_bind (publisher, 'tcp://*:5556')
         if (rc /= 0) stop '1st Bind failed'
 
-        rc = f77_zmq_bind (publisher, "ipc://weather.ipc")
+        rc = f77_zmq_bind (publisher, 'ipc://weather.ipc')
         if (rc /= 0) stop '2nd Bind failed'
 
         do

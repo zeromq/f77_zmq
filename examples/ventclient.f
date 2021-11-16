@@ -16,12 +16,12 @@
         ! Socket to receive messages on
         context  = f77_zmq_ctx_new()
         receiver = f77_zmq_socket(context,ZMQ_PULL)
-        rc = f77_zmq_connect (receiver, "tcp://localhost:5557")
+        rc = f77_zmq_connect (receiver, 'tcp://localhost:5557')
         if (rc /= 0) stop '1st Connect failed'
        
         ! Socket to send messages to
         sender = f77_zmq_socket (context, ZMQ_PUSH);
-        rc = f77_zmq_connect (sender, "tcp://localhost:5558");
+        rc = f77_zmq_connect (sender, 'tcp://localhost:5558');
         if (rc /= 0) stop '2nd Connect failed'
        
         ! Process tasks forever
@@ -30,7 +30,7 @@
             print '(A)', string(1:rc)
             read(string(1:rc),*) msecs
             call milli_sleep(msecs)
-            rc = f77_zmq_send (sender, "", 0, 0) ! Send results to sink
+            rc = f77_zmq_send (sender, '', 0, 0) ! Send results to sink
         enddo
         rc = f77_zmq_close (receiver);
         rc = f77_zmq_close (sender);

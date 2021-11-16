@@ -16,19 +16,19 @@
 
         context = f77_zmq_ctx_new()
         sender  = f77_zmq_socket(context,ZMQ_PUSH)
-        rc = f77_zmq_bind (sender, "tcp://*:5557")
+        rc = f77_zmq_bind (sender, 'tcp://*:5557')
         if (rc /= 0) stop 'Bind failed'
 
         ! Socket to send start of batch message on
         sink = f77_zmq_socket (context, ZMQ_PUSH)
-        rc = f77_zmq_connect (sink, "tcp://localhost:5558")
+        rc = f77_zmq_connect (sink, 'tcp://localhost:5558')
         if (rc /= 0) stop 'Connect failed'
 
         print *, 'Press Enter when the workers are ready:'
         read(*,*)
         print *, 'Sending tasks to workers…'
 
-        ! The first message is "0" and signals start of batch
+        ! The first message is '0' and signals start of batch
         rc = f77_zmq_send (sink, '0', 1, 0);
         if (rc /= 1) stop 'Send failed'
 

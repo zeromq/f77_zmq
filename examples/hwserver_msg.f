@@ -29,7 +29,7 @@
         do 
 
           ! Example with f77_zmq_msg_copy_to/from_data 
-          print *,  'msg_copy_from/to'
+          print '(A30)',  'msg_copy_from/to'
           rc = f77_zmq_msg_init(request)
           if (rc /= 0) stop 'f77_zmq_msg_init failed'
 
@@ -37,7 +37,7 @@
 
           rc = f77_zmq_msg_copy_from_data (request, buffer)
 
-          print *,  'Received :', buffer(1:rc)
+          print '(A20,A20)',  'Received :', buffer(1:rc)
 
           rc = f77_zmq_msg_close(request)
           if (rc /= 0) stop 'f77_zmq_msg_close failed'
@@ -61,7 +61,7 @@
 
 
           ! Example with f77_zmq_msg_copy
-          print *,  'msg_copy'
+          print '(A30)',  'msg_copy'
 
           rc = f77_zmq_msg_init(request)
           if (rc /= 0) stop 'f77_zmq_msg_init failed'
@@ -89,7 +89,7 @@
 
 
           ! Example with f77_zmq_msg_init_data
-          print *,  'msg_new/destroy_data'
+          print '(A30)',  'msg_new/destroy_data'
           rc = f77_zmq_msg_init(request)
           if (rc /= 0) stop 'f77_zmq_msg_init failed'
 
@@ -97,7 +97,7 @@
 
           rc = f77_zmq_msg_copy_from_data (request, buffer)
 
-          print *,  'Received :', buffer(1:rc)
+          print '(A20,A20)',  'Received :', buffer(1:rc)
 
           rc = f77_zmq_msg_close(request)
           if (rc /= 0) stop 'f77_zmq_msg_close failed'

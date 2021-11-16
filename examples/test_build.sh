@@ -18,44 +18,44 @@ trap cleanall EXIT
 # =========
 
 cat << EOF > ref1 
- msg_copy_from/to
- Received :Hello!
- msg_copy
- msg_new/destroy_data
- Received :Hello!
- msg_copy_from/to
- Received :Hello!
- msg_copy
- msg_new/destroy_data
- Received :Hello!
- msg_copy_from/to
- Received :Hello!
- msg_copy
- msg_new/destroy_data
- Received :Hello!
- msg_copy_from/to
- Received :Hello!
+              msg_copy_from/to
+          Received :              Hello!
+                      msg_copy
+          msg_new/destroy_data
+          Received :              Hello!
+              msg_copy_from/to
+          Received :              Hello!
+                      msg_copy
+          msg_new/destroy_data
+          Received :              Hello!
+              msg_copy_from/to
+          Received :              Hello!
+                      msg_copy
+          msg_new/destroy_data
+          Received :              Hello!
+              msg_copy_from/to
+          Received :              Hello!
 EOF
 
 cat << EOF > ref2
-           1 Received :World
-           2 Received :Hello!
-           3 Received :world
-           4 Received :World
-           5 Received :Hello!
-           6 Received :world
-           7 Received :World
-           8 Received :Hello!
-           9 Received :world
-          10 Received :World
+   1          Received :               World
+   2          Received :              Hello!
+   3          Received :               world
+   4          Received :               World
+   5          Received :              Hello!
+   6          Received :               world
+   7          Received :               World
+   8          Received :              Hello!
+   9          Received :               world
+  10          Received :               World
 EOF
 
 cat << EOF > ref3
- Joined            1
- Joined            2
- Joined            3
- Joined            4
- Joined            5
+   Joined    1
+   Joined    2
+   Joined    3
+   Joined    4
+   Joined    5
 EOF
 
 ./hwserver_msg > hwserver_msg.out &

@@ -23,9 +23,9 @@
           rc = f77_zmq_send(term, '1', 1, 0)
           rc = f77_zmq_send(requester, 'Hello!', 6, 0)
           rc = f77_zmq_recv(requester, buffer, 20, 0)
-          print *,  i, 'Received :', buffer(1:rc)
+          print '(I4,A20,A20)',  i, 'Received :', buffer(1:rc)
         enddo
-        rc = f77_zmq_send(term, "0", 1, 0)
+        rc = f77_zmq_send(term, '0', 1, 0)
 
         rc = f77_zmq_close(term)
         rc = f77_zmq_close(requester)

@@ -17,7 +17,7 @@
         print *, 'Collecting updates from weather server…'
         context = f77_zmq_ctx_new()
         subscriber = f77_zmq_socket (context, ZMQ_SUB)
-        rc = f77_zmq_connect (subscriber, "tcp://localhost:5556")
+        rc = f77_zmq_connect (subscriber, 'tcp://localhost:5556')
         if (rc /= 0) stop 'Connect failed'
 
         if (iargc() > 1) then
@@ -38,8 +38,8 @@
           read(string(1:rc),*) zipcode, temperature, relhumidity
           total_temp = total_temp + temperature
         enddo
-        print *, 'Average temperature for zipcode "'//trim(filter)//
-     &    '" was ', int(real(total_temp)/100.), "F"
+        print *, 'Average temperature for zipcode ''//trim(filter)//
+     &    '' was ', int(real(total_temp)/100.), 'F'
         rc = f77_zmq_close(subscriber)
         rc = f77_zmq_ctx_destroy(context)
 

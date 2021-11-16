@@ -17,21 +17,20 @@
         common /ctx/ context
         ! Socket to receive messages on
         receiver = f77_zmq_socket(context,ZMQ_PULL)
-        rc = f77_zmq_connect (receiver, "inproc://5557")
+        rc = f77_zmq_connect (receiver, 'inproc://5557')
         if (rc /= 0) stop '1st Connect failed'
 
         ! Socket to send messages to
         sender = f77_zmq_socket (context, ZMQ_PUSH);
-        rc = f77_zmq_connect (sender, "inproc://5558");
+        rc = f77_zmq_connect (sender, 'inproc://5558');
         if (rc /= 0) stop '2nd Connect failed'
 
         msecs = 1
         do while (msecs >= 0)
             rc = f77_zmq_recv (receiver, string, 20, 0)
-!            print '(A)', string(1:rc)
             read(string(1:rc),*) msecs
             call milli_sleep(msecs)
-            rc = f77_zmq_send (sender, "", 0, 0) ! Send results to sink
+            rc = f77_zmq_send (sender, '', 0, 0) ! Send results to sink
         enddo
         rc = f77_zmq_close (receiver);
         rc = f77_zmq_close (sender);
@@ -73,16 +72,16 @@
         common /ctx/ context
 
         sender  = f77_zmq_socket(context,ZMQ_PUSH)
-        rc = f77_zmq_bind (sender, "inproc://5557")
+        rc = f77_zmq_bind (sender, 'inproc://5557')
         if (rc /= 0) stop 'Bind failed'
 
         ! Socket to send start of batch message on
         sink = f77_zmq_socket (context, ZMQ_PUSH)
-        rc = f77_zmq_connect (sink, "inproc://5558")
+        rc = f77_zmq_connect (sink, 'inproc://5558')
         if (rc /= 0) stop 'Connect failed'
 
         call sleep(1)
-        ! The first message is "0" and signals start of batch
+        ! The first message is '0' and signals start of batch
         rc = f77_zmq_send (sink, '0', 1, 0);
         if (rc /= 1) stop 'Send failed'
 
@@ -94,13 +93,12 @@
             workload = int(100.*r) + 1
             total_msec = total_msec + workload
             write(string,'(I8)') workload
-!            print '(A)', string
             rc = f77_zmq_send(sender,string,len(trim(string)),0)
         enddo
         do task_nbr=1,4
           rc = f77_zmq_send(sender,'-1',2,0)
         enddo
-        print *, 'Total expected cost: ',total_msec,' msec'
+        print '(A30,I4,A5)', 'Total expected cost: ',total_msec,' msec'
 
         rc = f77_zmq_close (sink)
         rc = f77_zmq_close (sender)
@@ -138,7 +136,7 @@
           if (rc /= 0) then
             stop 'Failed to join thread '
           endif
-          print *,  'Joined ', i
+          print '(A10,I4)',  'Joined ', i
         enddo
         rc = f77_zmq_ctx_destroy (context)
       end
