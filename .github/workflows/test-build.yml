@@ -1,0 +1,49 @@
+name: test-build
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  x86_ubuntu:
+
+    runs-on: ubuntu-latest
+    name: x86 Ubuntu latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Install zeromq
+      run: sudo apt-get install libzmq-dev
+
+    - name: Build
+      run: |
+        ./autogen.sh
+        ./configure --enable-silent-rules
+        make -j 8
+
+    - name: Run test
+      run: |
+        make -j check
+
+    - name: Archive test log file
+      if: failure()
+      uses: actions/upload-artifact@v2
+      with:
+        name: test-report
+        path: test-suite.log
+
+    - name: Dist test
+      run: |
+        make distcheck
+
+    - name: Archive test log file
+      if: failure()
+      uses: actions/upload-artifact@v2
+      with:
+        name: dist-report
+        path: test-suite.log
+
+

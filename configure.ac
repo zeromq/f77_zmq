@@ -2,7 +2,7 @@
 
 AC_PREREQ([2.69])
 
-AC_INIT([f77-zmq], [4.3.1], [https://github.com/zeromq/f77_zmq/issues])
+AC_INIT([f77-zmq], [4.3.2], [https://github.com/zeromq/f77_zmq/issues])
 AC_CONFIG_AUX_DIR([build-config])
 AC_CONFIG_MACRO_DIRS([build-config/m4])
 AM_INIT_AUTOMAKE([silent-rules foreign subdir-objects])
