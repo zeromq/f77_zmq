@@ -3,6 +3,7 @@ ACLOCAL_AMFLAGS = -I build-config/m4
 lib_LTLIBRARIES = libf77zmq.la
 include_HEADERS = f77_zmq.h f77_zmq_free.h
 libf77zmq_la_SOURCES = f77_zmq.c $(include_HEADERS)
+libf77zmq_la_LIBADD  = $(ZMQ_LIBS)
 
 CLEANFILES = $(include_HEADERS)
 
