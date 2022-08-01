@@ -17,7 +17,6 @@ f77_zmq_free.h: f77_zmq.h
 
 
 
-
 # Examples
 # --------
 
@@ -62,6 +61,7 @@ check_PROGRAMS =                 \
     examples/vent_thread
 
 EXTRA_DIST =                     \
+    LICENSE                      \
     create_f77_zmq_h.py          \
     examples/hw_msg.sh           \
     examples/hw.sh               \
