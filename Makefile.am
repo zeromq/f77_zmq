@@ -74,7 +74,7 @@ EXTRA_DIST =                     \
     examples/wu.sh
 
 
-TESTLDADD =  -lf77zmq $(ZMQ_LIBS) -L$(builddir)
+TESTLDADD =  -lf77zmq -L$(builddir)
 TESTLDFLAGS = -no-install
 TESTFFLAGS = -I$(builddir) -I$(srcdir)
 
